@@ -1,0 +1,124 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Label from '../ui/Label.astro';
+import Icon from '../ui/Icon.astro';
+import FounderMonogram from '../mockups/FounderMonogram.astro';
+import { company } from '../../data/company';
+
+// Uses src/assets/founder.jpg when it exists; otherwise the GV monogram.
+const photos = import.meta.glob<{ default: ImageMetadata }>('../../assets/founder.jpg', { eager: true });
+const photo = Object.values(photos)[0]?.default;
+---
+
+<section class="section" aria-labelledby="about-title">
+  <div class="container">
+    <div id="about" class="grid">
+      {
+        photo ? (
+          <Image
+            src={photo}
+            alt="Gowtham Venkatesh Rajmohan, Founder of Uyir AI Labs"
+            width={320}
+            height={360}
+            class="photo"
+            loading="lazy"
+          />
+        ) : (
+          <FounderMonogram />
+        )
+      }
+      <figure class="note" data-reveal>
+        <h2 class="visually-hidden" id="about-title">About Uyir AI Labs</h2>
+        <Label>A note from the founder</Label>
+        <blockquote class="t-heading quote">
+          <p>
+            “Good businesses still run on spreadsheets and phone calls. We build AI that takes that load off,
+            <span class="accent">so people can focus on the work only they can do.</span>”
+          </p>
+        </blockquote>
+        <figcaption class="by">
+          <span class="who">
+            <span class="name">{company.founder.name}</span>
+            <span class="t-small role">Founder &amp; Director · PMP · 11+ years in project delivery and operations</span>
+          </span>
+          {
+            company.linkedinUrl && (
+              <a href={company.linkedinUrl} class="linkedin" aria-label="Gowtham on LinkedIn" target="_blank" rel="noopener">
+                <Icon name="linkedin" size={20} />
+              </a>
+            )
+          }
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: var(--space-16);
+    align-items: center;
+  }
+  .grid :global(.photo) {
+    width: 320px;
+    height: 360px;
+    object-fit: cover;
+    border-radius: var(--radius-xl);
+  }
+  .note {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .quote {
+    margin: 0;
+    color: var(--ink);
+  }
+  .accent {
+    color: var(--pulse-text);
+  }
+  .by {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .who {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .name {
+    font-weight: 700;
+  }
+  .role {
+    color: var(--ink-muted);
+  }
+  .linkedin {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+  }
+  .linkedin:hover {
+    background: var(--surface-300);
+  }
+  @media (max-width: 767px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-8);
+    }
+    .grid :global(.photo) {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+    }
+  }
+</style>

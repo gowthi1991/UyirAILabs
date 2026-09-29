@@ -1,0 +1,88 @@
+---
+// Segmented control (native radio group) for the enquiry intent.
+const intents = [
+  { value: 'project', label: 'Start a project' },
+  { value: 'investor', label: 'Investor' },
+  { value: 'firro', label: 'Firro demo' },
+  { value: 'other', label: 'Other' },
+];
+---
+
+<fieldset class="intent">
+  <legend class="t-label legend">What’s this about?</legend>
+  <div class="options">
+    {
+      intents.map((i, n) => (
+        <label class="option">
+          <input type="radio" name="intent" value={i.value} checked={n === 0} data-intent-radio />
+          <span class="t-button">{i.label}</span>
+        </label>
+      ))
+    }
+  </div>
+</fieldset>
+
+<style>
+  .intent {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  .legend {
+    padding: 0;
+    margin-bottom: var(--space-3);
+    color: var(--ink);
+  }
+  .options {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-1);
+    padding: var(--space-1);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line-strong);
+    background: var(--surface-100);
+  }
+  .option {
+    position: relative;
+    display: flex;
+  }
+  .option input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  .option span {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--ink-muted);
+    text-align: center;
+    transition:
+      background-color 200ms ease,
+      color 200ms ease;
+  }
+  .option:hover span {
+    color: var(--ink);
+  }
+  .option input:checked + span {
+    background: var(--pulse-soft);
+    color: var(--pulse-text);
+    box-shadow: inset 0 0 0 1px var(--pulse-text);
+  }
+  .option input:focus-visible + span {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  @media (max-width: 767px) {
+    .options {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

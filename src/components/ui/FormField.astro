@@ -1,0 +1,102 @@
+---
+// Labelled input/textarea with an inline error slot wired via aria-describedby.
+interface Props {
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel';
+  required?: boolean;
+  multiline?: boolean;
+  wide?: boolean;
+  placeholder?: string;
+  autocomplete?: string;
+}
+
+const { name, label, type = 'text', required = false, multiline = false, wide = false, placeholder, autocomplete } =
+  Astro.props;
+const id = `f-${name}`;
+const errorId = `${id}-error`;
+---
+
+<div class:list={['field', { wide }]}>
+  <label for={id} class="t-small label">
+    {label}
+    {required ? <span class="req" aria-hidden="true">*</span> : <span class="opt">(optional)</span>}
+  </label>
+  {
+    multiline ? (
+      <textarea
+        id={id}
+        name={name}
+        rows="5"
+        required={required}
+        placeholder={placeholder}
+        aria-describedby={errorId}
+        class="control t-body"
+        data-field={name}
+      />
+    ) : (
+      <input
+        id={id}
+        name={name}
+        type={type}
+        required={required}
+        placeholder={placeholder}
+        autocomplete={autocomplete}
+        aria-describedby={errorId}
+        class="control t-body"
+        data-field={name}
+      />
+    )
+  }
+  <p class="error t-small" id={errorId} data-error-for={name} hidden></p>
+</div>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+  .wide {
+    grid-column: 1 / -1;
+  }
+  .label {
+    color: var(--ink);
+  }
+  .req,
+  .error {
+    color: var(--danger);
+  }
+  .req {
+    margin-left: var(--space-1);
+  }
+  .opt {
+    margin-left: var(--space-1);
+    color: var(--ink-muted);
+  }
+  .control {
+    width: 100%;
+    min-height: 48px;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line-strong);
+    background: var(--surface-100);
+    color: var(--ink);
+  }
+  textarea.control {
+    resize: vertical;
+    min-height: 144px;
+  }
+  .control::placeholder {
+    color: var(--ink-muted);
+    opacity: 1;
+  }
+  .control:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .control[aria-invalid='true'] {
+    border-color: var(--danger);
+  }
+</style>

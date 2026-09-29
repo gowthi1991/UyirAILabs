@@ -1,0 +1,171 @@
+---
+// Enquiry form → Web3Forms. Works without JS (plain POST + redirect to /thanks);
+// with JS: inline validation, fetch submit, loading/success/error states.
+import IntentPicker from './IntentPicker.astro';
+import FormField from '../ui/FormField.astro';
+import { company, mailto } from '../../data/company';
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+const site = Astro.site ?? new URL('https://uyirailabs.com');
+const redirect = new URL('/thanks', site).href;
+---
+
+<div class="form-card" data-contact>
+  <form
+    class="form"
+    action="https://api.web3forms.com/submit"
+    method="POST"
+    data-contact-form
+    data-configured={accessKey ? 'true' : 'false'}
+  >
+    <input type="hidden" name="access_key" value={accessKey} />
+    <input type="hidden" name="subject" value="Website enquiry" data-subject />
+    <input type="hidden" name="from_name" value="uyirailabs.com" />
+    <input type="hidden" name="redirect" value={redirect} />
+    <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+    <IntentPicker />
+
+    <div class="fields">
+      <FormField name="name" label="Name" required autocomplete="name" />
+      <FormField name="email" label="Email" type="email" required autocomplete="email" />
+      <FormField name="phone" label="Phone" type="tel" placeholder="+91" autocomplete="tel" />
+      <FormField name="company" label="Company" autocomplete="organization" />
+      <FormField
+        name="message"
+        label="Message"
+        multiline
+        required
+        wide
+        placeholder="Tell us about your operation and what you’d like AI to take off your plate."
+      />
+    </div>
+
+    <div class="consent">
+      <input type="checkbox" id="f-consent" name="consent" value="yes" required aria-describedby="f-consent-error" />
+      <label for="f-consent" class="t-small">
+        I agree to the <a href="/privacy">Privacy Policy</a>. <span class="req" aria-hidden="true">*</span>
+      </label>
+      <p class="error t-small" id="f-consent-error" data-error-for="consent" hidden></p>
+    </div>
+
+    <div class="submit-row">
+      <button type="submit" class="submit t-button" data-submit>
+        <span data-submit-label>Send enquiry</span>
+      </button>
+      <p class="t-small note"><span aria-hidden="true">*</span> Required</p>
+    </div>
+
+    <div class="status t-small" role="alert" data-status hidden>
+      We couldn’t send your message. Please try again, or email us at
+      <a href={`${mailto}?subject=Website%20enquiry`}>{company.email}</a>.
+    </div>
+  </form>
+
+  <div class="success" data-success tabindex="-1" hidden>
+    <p class="t-title" data-success-text>Thanks. We’ll reply within one business day.</p>
+  </div>
+</div>
+
+<script>
+  import { initContactForm } from '../../scripts/contact-form';
+  initContactForm();
+</script>
+
+<style>
+  .form-card {
+    width: 100%;
+    max-width: 800px;
+    margin-top: var(--space-6);
+    padding: var(--space-12);
+    border-radius: var(--radius-xl);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+    text-align: left;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .honeypot {
+    display: none;
+  }
+  .fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4) var(--space-6);
+  }
+  .consent {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: var(--space-1) var(--space-3);
+  }
+  .consent input {
+    width: 24px;
+    height: 24px;
+    margin: 0;
+    accent-color: var(--pulse);
+  }
+  .consent label {
+    color: var(--ink);
+    align-self: center;
+  }
+  .consent .error {
+    grid-column: 2;
+  }
+  .req,
+  .error {
+    color: var(--danger);
+  }
+  .submit-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 var(--space-6);
+    border: 0;
+    border-radius: var(--radius-md);
+    background: var(--pulse);
+    color: var(--on-pulse);
+    cursor: pointer;
+  }
+  .submit:focus-visible {
+    outline-color: var(--focus-on-pulse);
+  }
+  .submit[aria-busy='true'] {
+    cursor: progress;
+    opacity: 0.8;
+  }
+  .note,
+  .muted {
+    color: var(--ink-muted);
+  }
+  .status {
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--danger);
+    color: var(--ink);
+  }
+  .success {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    outline: none;
+  }
+  @media (max-width: 767px) {
+    .form-card {
+      padding: var(--space-6);
+    }
+    .fields {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

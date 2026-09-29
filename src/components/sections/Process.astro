@@ -1,0 +1,99 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+
+const steps = [
+  { title: 'Discover', body: 'We map the operation, the users and the one outcome that matters, and agree scope in writing.' },
+  { title: 'Design', body: 'Clickable prototypes and a design system before code, so you see it before you pay for it.' },
+  { title: 'Build', body: 'Short cycles with a working build every week, tested on real devices and real data.' },
+  { title: 'Support', body: 'We launch it, watch it and keep improving it — the same way we run Firro.' },
+];
+---
+
+<section class="section" aria-labelledby="process-title" data-loop>
+  <div class="container inner">
+    <SectionHeading eyebrow="How we work" lead="Four steps," rest="no surprises." id="process-title" />
+    <div class="track">
+      <span class="progress" aria-hidden="true"></span>
+      <ol class="steps" role="list">
+        {
+          steps.map((s, i) => (
+            <li class="step" data-reveal>
+              <span class="num t-code">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="t-title">{s.title}</h3>
+              <p class="t-body body">{s.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+  .track {
+    position: relative;
+  }
+  /* Process progress line (allowed loop): scaleX, not width. */
+  .progress {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 2px;
+    background: var(--pulse-text);
+    transform-origin: left center;
+    animation: progress 8s ease-in-out infinite;
+  }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-8);
+    margin: 0;
+  }
+  .step {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-top: var(--space-6);
+    border-top: 2px solid var(--line-strong);
+  }
+  .num {
+    color: var(--pulse-text);
+  }
+  .body {
+    color: var(--ink-muted);
+  }
+  @keyframes progress {
+    0% {
+      transform: scaleX(0);
+    }
+    85%,
+    100% {
+      transform: scaleX(1);
+    }
+  }
+  @media (max-width: 1024px) {
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .progress {
+      display: none;
+    }
+  }
+  @media (max-width: 767px) {
+    .steps {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .progress {
+      display: none;
+    }
+  }
+</style>

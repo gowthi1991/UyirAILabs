@@ -4,6 +4,11 @@ Decisions taken during builds. Newest first.
 
 | # | Task | Decision | Options considered | Why |
 | --- | --- | --- | --- | --- |
+| 22 | 04 | Success panel says only "Thanks, {name}. We'll reply within one business day." | Also promise a copy to the sender | Web3Forms emails us, not the sender; don't claim what the system doesn't do. |
+| 21 | 04 | Browser validation is turned off by JS (`form.noValidate = true`), not in markup | `novalidate` in HTML | Without JS the browser's native `required` checks still protect the plain POST. |
+| 20 | 04 | The reference's closing "Start a project" button is replaced by the form; "Chat on WhatsApp" stays (hidden while no number) | Keep both buttons above the form | The button would just scroll to the form directly below it. |
+| 19 | 04 | Intent radios pre-select "Start a project" when the URL has no `intent` | No default | The task lists it first; a default avoids an unanswerable required choice. |
+| 18 | 04 | Submit label "Send enquiry"; per-intent placeholders written for the form | — | The form is new (not in the reference); copy is UX microcopy, no facts or numbers. |
 | 17 | 03 | Service cards link to `/?intent=project#contact`; "Explore Firro" links to `/#work` (the Firro case study) | Self-links to `#services` / `#firro` as in the reference | A card with an arrow must go somewhere; self-links are dead links. |
 | 16 | 03 | "All services" and "All insights" buttons omitted | Keep them pointing at their own section | No index pages exist in v1; a button that goes nowhere fails the launch checklist ("no `#` placeholders"). Logged in TECH-DEBT. |
 | 15 | 03 | Small card titles (Firro app tiles, "Now building" rows) use the `button` style (15/20, 700) | `title` (20px) or an ad-hoc 16px bold | Reference uses 16px bold, which is not a named style; `title` wrapped the tile headers. |

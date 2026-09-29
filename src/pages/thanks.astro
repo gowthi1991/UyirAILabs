@@ -1,0 +1,33 @@
+---
+// Landing page for the no-JavaScript form path (Web3Forms redirects here).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import Label from '../components/ui/Label.astro';
+---
+
+<BaseLayout title="Thanks — Uyir AI Labs" description="Your enquiry has been sent to Uyir AI Labs." noindex>
+  <section class="thanks section">
+    <div class="container inner">
+      <Label dot>Message sent</Label>
+      <h1 class="t-display-lg">Thanks. We’ll reply within one business day.</h1>
+      <p class="t-body-lg sub">We reply with questions, not a sales pitch.</p>
+      <Button href="/" variant="secondary">Back to home</Button>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .thanks {
+    min-height: 60vh;
+  }
+  .inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    max-width: calc(720px + 2 * var(--gutter));
+  }
+  .sub {
+    color: var(--ink-muted);
+  }
+</style>

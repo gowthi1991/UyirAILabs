@@ -1,0 +1,50 @@
+---
+// "GV" monogram with orbit rings; stands in until a founder photo is supplied.
+// The orbit dot is drawn still (orbit is not in the brand book's loop list).
+---
+
+<div class="mono theme-dark" role="img" aria-label="GV monogram for Gowtham Venkatesh Rajmohan">
+  <svg viewBox="0 0 320 360" aria-hidden="true" focusable="false">
+    <circle class="ring" cx="160" cy="180" r="120" />
+    <circle class="ring dashed" cx="160" cy="180" r="90" />
+    <circle class="dot" cx="245" cy="95" r="5" />
+  </svg>
+  <span class="t-display-xl initials" aria-hidden="true">GV</span>
+</div>
+
+<style>
+  .mono {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 320px;
+    max-width: 100%;
+    aspect-ratio: 320 / 360;
+    border-radius: var(--radius-xl);
+    background: var(--surface-100);
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+  svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .ring {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1.5;
+  }
+  .dashed {
+    stroke-dasharray: 3 7;
+  }
+  .dot {
+    fill: var(--pulse);
+  }
+  .initials {
+    position: relative;
+    color: var(--ink);
+  }
+</style>

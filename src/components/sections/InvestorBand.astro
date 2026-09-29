@@ -1,0 +1,60 @@
+---
+import Label from '../ui/Label.astro';
+import Button from '../ui/Button.astro';
+---
+
+<section id="investors" class="investors" aria-labelledby="investors-title">
+  <div class="container">
+    <div class="band" data-reveal>
+      <div class="copy">
+        <Label>For investors</Label>
+        <h2 class="t-heading statement" id="investors-title">
+          We’re building the AI operating system for India’s subscription kitchens,
+          <span class="accent">starting in Coimbatore.</span>
+        </h2>
+      </div>
+      <Button href="/?intent=investor#contact" intent="investor" variant="secondary">Request investor deck</Button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .investors {
+    padding-top: var(--section-pad);
+    background: var(--surface-100);
+  }
+  .band {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-12);
+    padding: var(--space-12);
+    border-radius: var(--radius-xl);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+  }
+  .copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+  .statement {
+    max-width: 720px;
+    color: var(--ink);
+  }
+  .accent {
+    color: var(--pulse-text);
+  }
+  @media (max-width: 1024px) {
+    .band {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-8);
+    }
+  }
+  @media (max-width: 767px) {
+    .band {
+      padding: var(--space-6);
+    }
+  }
+</style>

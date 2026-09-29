@@ -1,0 +1,120 @@
+---
+// Closing CTA (dark, radar rings) with the enquiry form.
+import Label from '../ui/Label.astro';
+import Icon from '../ui/Icon.astro';
+import ContactForm from './ContactForm.astro';
+import { whatsappUrl } from '../../data/company';
+---
+
+<section id="contact" class="contact" aria-labelledby="contact-title" data-loop>
+  <div class="rings" aria-hidden="true">
+    <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+  </div>
+  <div class="container inner">
+    <Label dot>Now taking new projects</Label>
+    <h2 class="t-display-xl title" id="contact-title">
+      <span class="muted">Where could AI</span> work for you?
+    </h2>
+    <p class="t-body-lg sub">
+      Tell us about your operation. We reply within one business day with questions, not a sales pitch.
+    </p>
+    {
+      whatsappUrl && (
+        <a href={whatsappUrl} class="whatsapp t-button" target="_blank" rel="noopener">
+          <Icon name="whatsapp" size={18} />
+          Chat on WhatsApp
+        </a>
+      )
+    }
+    <ContactForm />
+  </div>
+</section>
+
+<style>
+  .contact {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding-block: var(--section-pad);
+    background: var(--surface-100);
+    text-align: center;
+  }
+  .inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-6);
+  }
+  .title {
+    color: var(--ink);
+  }
+  .muted {
+    color: var(--ink-muted);
+  }
+  .sub {
+    max-width: 560px;
+    color: var(--ink-muted);
+  }
+  .whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 48px;
+    padding: 0 var(--space-6);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line-strong);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .whatsapp:hover {
+    background: var(--surface-300);
+  }
+  /* Contact radar rings (allowed loop). */
+  .rings {
+    position: absolute;
+    left: 50%;
+    top: calc(var(--space-30) * 2);
+    z-index: -1;
+    width: 0;
+    height: 0;
+  }
+  .ring {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 900px;
+    height: 900px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--line);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+    animation: ring 4s ease-out infinite;
+  }
+  .ring:nth-child(2) {
+    animation-delay: 1.3s;
+  }
+  .ring:nth-child(3) {
+    animation-delay: 2.6s;
+  }
+  @keyframes ring {
+    0% {
+      transform: translate(-50%, -50%) scale(0.2);
+      opacity: 0.6;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0;
+    }
+  }
+  @media (max-width: 767px) {
+    .ring {
+      width: 560px;
+      height: 560px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rings {
+      display: none;
+    }
+  }
+</style>

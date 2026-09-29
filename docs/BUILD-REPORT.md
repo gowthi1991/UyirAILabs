@@ -56,3 +56,21 @@
 **Could not verify:** real devices; the Native Nights link target (URL not supplied yet).
 
 **TODOs / tech debt:** blog pages pending (article cards link to `/#insights`); no Services or Insights index pages, so the reference's "All services" / "All insights" buttons are left out (see DECISIONS #16).
+
+## Task 04 — plan
+
+- `sections/Process.astro`: four steps, numbers in `pulse-text`, looping progress line (scaleX).
+- `sections/Founder.astro` + `mockups/FounderMonogram.astro`: uses `src/assets/founder.jpg` via `import.meta.glob` when present, else the GV monogram; quote + credentials from the reference; LinkedIn button only when `company.linkedinUrl` is set.
+- `sections/InvestorBand.astro`: copy from the reference; "Request investor deck" → `/?intent=investor#contact` (`data-intent`).
+- `sections/ContactCTA.astro` (radar rings, heading, subline, WhatsApp button only when a number is set) + `ContactForm.astro`, `IntentPicker.astro` (native radio group styled as a segmented control), `ui/FormField.astro`.
+- `scripts/contact-form.ts`: preselect intent from `?intent=`; in-page `a[data-intent]` clicks set the intent + scroll without reload; per-intent message placeholder and subject "Website enquiry — {intent}"; inline errors (`aria-invalid` + `aria-describedby`), focus first invalid field; loading state; success replaces the form ("Thanks, {name}. We'll reply within one business day."); error with mailto fallback; "Form not configured" console warning when `PUBLIC_WEB3FORMS_KEY` is empty.
+- No-JS path: the form is a normal POST to Web3Forms with `redirect` → `/thanks` (`pages/thanks.astro`, noindex, excluded from the sitemap). Honeypot `botcheck`.
+- `ui/WhatsAppFab.astro` in the layout (renders nothing while the number is empty). `.env.example`.
+
+## Task 04 — result
+
+**Built:** all of the above; build passes. In the browser: `/?intent=firro#contact` preselects "Firro demo" with the Firro placeholder and subject; empty submit shows all four errors and focuses Name; clicking "Request investor deck" switches to Investor and updates the URL without reloading; a valid submit with no key shows the error box and logs the "Form not configured" warning. Fixed: `[hidden]` now always hides (the success panel was showing).
+
+**Could not verify:** a live Web3Forms submission (no key yet) for any intent; the no-JS POST + redirect to `/thanks`; screen reader announcements of the error/success states.
+
+**TODOs:** `PUBLIC_WEB3FORMS_KEY` in `.env` and Vercel; founder photo → `src/assets/founder.jpg`; LinkedIn URL and WhatsApp number in `company.ts`.

@@ -1,0 +1,42 @@
+---
+// Floating WhatsApp button, bottom-right on every page. Renders nothing until a number is set.
+import Icon from './Icon.astro';
+import { whatsappUrl } from '../../data/company';
+---
+
+{
+  whatsappUrl && (
+    <a href={whatsappUrl} class="fab" aria-label="Chat on WhatsApp" target="_blank" rel="noopener">
+      <Icon name="whatsapp" size={26} stroke={2} />
+    </a>
+  )
+}
+
+<style>
+  .fab {
+    position: fixed;
+    right: var(--space-8);
+    bottom: var(--space-8);
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-pill);
+    background: var(--pulse);
+    color: var(--on-pulse);
+    box-shadow: var(--shadow-float);
+  }
+
+  .fab:focus-visible {
+    outline-color: var(--focus-on-pulse);
+  }
+
+  @media (max-width: 767px) {
+    .fab {
+      right: var(--space-4);
+      bottom: var(--space-4);
+    }
+  }
+</style>

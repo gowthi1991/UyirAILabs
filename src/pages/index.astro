@@ -8,6 +8,10 @@ import NativeNights from '../components/sections/NativeNights.astro';
 import Services from '../components/sections/Services.astro';
 import Work from '../components/sections/Work.astro';
 import Insights from '../components/sections/Insights.astro';
+import Process from '../components/sections/Process.astro';
+import Founder from '../components/sections/Founder.astro';
+import InvestorBand from '../components/sections/InvestorBand.astro';
+import ContactCTA from '../components/sections/ContactCTA.astro';
 ---
 
 <BaseLayout canonicalPath="/">
@@ -22,7 +26,12 @@ import Insights from '../components/sections/Insights.astro';
     <Services />
     <Work />
     <Insights />
+    <Process />
+    <Founder />
   </div>
+
+  <InvestorBand />
+  <ContactCTA />
 </BaseLayout>
 
 <style>
