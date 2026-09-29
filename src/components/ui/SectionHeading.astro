@@ -1,0 +1,51 @@
+---
+// Two-tone section heading: first line in pulse-text, second in ink (display-lg).
+interface Props {
+  lead: string;
+  rest: string;
+  level?: 'h1' | 'h2';
+  align?: 'left' | 'center';
+  eyebrow?: string;
+  id?: string;
+  class?: string;
+}
+
+const { lead, rest, level: Tag = 'h2', align = 'left', eyebrow, id, class: className } = Astro.props;
+---
+
+<div class:list={['heading-block', `heading-block--${align}`, className]}>
+  {eyebrow && <p class="t-label eyebrow">{eyebrow}</p>}
+  <Tag class="t-display-lg heading" id={id}>
+    <span class="lead">{lead}</span>
+    <span class="rest">{rest}</span>
+  </Tag>
+</div>
+
+<style>
+  .heading-block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .heading-block--center {
+    align-items: center;
+    text-align: center;
+  }
+
+  .eyebrow {
+    color: var(--ink);
+  }
+
+  .heading span {
+    display: block;
+  }
+
+  .lead {
+    color: var(--pulse-text);
+  }
+
+  .rest {
+    color: var(--ink);
+  }
+</style>

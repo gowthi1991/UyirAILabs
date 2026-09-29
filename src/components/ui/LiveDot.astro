@@ -1,0 +1,72 @@
+---
+// Filled pulse dot = live / AI state. The halo pulse is one of the allowed loops.
+interface Props {
+  size?: 6 | 8;
+  tone?: 'pulse' | 'pulse-text' | 'amber' | 'graphite';
+  still?: boolean;
+  class?: string;
+}
+
+const { size = 8, tone = 'pulse', still = false, class: className } = Astro.props;
+---
+
+<span
+  class:list={['dot', `dot--${tone}`, { 'dot--still': still }, className]}
+  style={`--dot: ${size}px`}
+  aria-hidden="true"></span>
+
+<style>
+  .dot {
+    position: relative;
+    flex-shrink: 0;
+    width: var(--dot);
+    height: var(--dot);
+    border-radius: var(--radius-pill);
+    background: var(--tone);
+  }
+
+  .dot--pulse {
+    --tone: var(--pulse);
+  }
+  .dot--pulse-text {
+    --tone: var(--pulse-text);
+  }
+  .dot--amber {
+    --tone: var(--amber);
+  }
+  .dot--graphite {
+    --tone: var(--graphite);
+  }
+
+  .dot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: var(--tone);
+    opacity: 0;
+    animation: halo 2.4s ease-out infinite;
+  }
+
+  .dot--still::after {
+    display: none;
+  }
+
+  @keyframes halo {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    70%,
+    100% {
+      transform: scale(2.5);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dot::after {
+      display: none;
+    }
+  }
+</style>

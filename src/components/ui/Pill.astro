@@ -1,0 +1,71 @@
+---
+// Status pill (radius-pill): a signal colour always comes with words.
+import LiveDot from './LiveDot.astro';
+
+interface Props {
+  tone?: 'pulse' | 'amber' | 'graphite';
+  variant?: 'outline' | 'soft';
+  live?: boolean;
+  uppercase?: boolean;
+  class?: string;
+}
+
+const { tone = 'pulse', variant = 'outline', live = false, uppercase = false, class: className } = Astro.props;
+const dotTone = tone === 'pulse' ? (variant === 'soft' ? 'pulse-text' : 'pulse') : tone;
+---
+
+<span class:list={['pill t-label', `pill--${tone}`, `pill--${variant}`, { 'pill--upper': uppercase }, className]}>
+  <LiveDot size={6} tone={dotTone} still={!live} />
+  <slot />
+</span>
+
+<style>
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    color: var(--ink);
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .pill--upper {
+    text-transform: uppercase;
+  }
+
+  .pill--outline {
+    background: var(--surface-300);
+    border: 1px solid var(--tone-line);
+  }
+
+  .pill--pulse {
+    --tone-line: var(--pulse-text);
+  }
+  .pill--amber {
+    --tone-line: var(--amber);
+  }
+  .pill--graphite {
+    --tone-line: var(--graphite);
+  }
+
+  .pill--soft {
+    border: 1px solid transparent;
+  }
+
+  .pill--soft.pill--pulse {
+    background: var(--pulse-soft);
+    color: var(--pulse-text);
+  }
+
+  .pill--soft.pill--amber {
+    background: var(--surface-300);
+    color: var(--amber);
+  }
+
+  .pill--soft.pill--graphite {
+    background: var(--surface-300);
+    color: var(--graphite);
+  }
+</style>

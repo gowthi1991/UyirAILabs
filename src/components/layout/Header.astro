@@ -1,0 +1,202 @@
+---
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+
+const links = [
+  { href: '/#firro', label: 'Products' },
+  { href: '/#services', label: 'Services' },
+  { href: '/#work', label: 'Work' },
+  { href: '/#about', label: 'About' },
+];
+---
+
+<header class="site-header" data-header>
+  <div class="container bar">
+    <a href="/" class="brand" aria-label="Uyir AI Labs home">
+      <img src="/brand/uyir-logo-dark.svg" alt="Uyir AI" width="117" height="40" />
+    </a>
+
+    <nav aria-label="Primary" class="nav-desktop">
+      {links.map((l) => <a href={l.href} class="nav-link t-button">{l.label}</a>)}
+    </nav>
+
+    <div class="actions">
+      <Button href="/#investors" variant="secondary" class="investors">Investors</Button>
+      <Button href="/?intent=project#contact" intent="project">Start a project</Button>
+    </div>
+
+    <button
+      type="button"
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-menu-toggle
+    >
+      <span class="visually-hidden" data-menu-label>Open menu</span>
+      <Icon name="menu" class="icon-open" />
+      <Icon name="close" class="icon-close" />
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu" data-menu>
+    <nav aria-label="Primary (mobile)" class="container mobile-nav">
+      {links.map((l) => <a href={l.href} class="mobile-link t-title">{l.label}</a>)}
+      <div class="mobile-actions">
+        <Button href="/#investors" variant="secondary">Investors</Button>
+        <Button href="/?intent=project#contact" intent="project">Start a project</Button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  import { initNav } from '../../scripts/nav';
+  initNav();
+</script>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 20;
+    background: var(--surface-100);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    height: 80px;
+  }
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    border-radius: var(--radius-sm);
+  }
+
+  .brand img {
+    height: 40px;
+    width: auto;
+  }
+
+  .nav-desktop {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    height: 44px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-md);
+    color: var(--ink-muted);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 200ms ease;
+  }
+
+  .nav-link:hover {
+    color: var(--ink);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .actions :global(.investors) {
+    background: var(--surface-300);
+    padding-inline: var(--space-4);
+  }
+
+  .menu-toggle,
+  .mobile-menu {
+    display: none;
+  }
+
+  @media (max-width: 1023px) {
+    .nav-desktop,
+    .actions {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius-md);
+      background: var(--surface-300);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .menu-toggle .icon-close,
+    .menu-toggle[aria-expanded='true'] .icon-open {
+      display: none;
+    }
+
+    .menu-toggle[aria-expanded='true'] .icon-close {
+      display: block;
+    }
+
+    .mobile-menu {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      display: none;
+      background: var(--surface-200);
+      border-bottom: 1px solid var(--line);
+      box-shadow: var(--shadow-raised);
+    }
+
+    .mobile-menu.is-open {
+      display: block;
+    }
+
+    .mobile-nav {
+      display: flex;
+      flex-direction: column;
+      padding-block: var(--space-4) var(--space-6);
+    }
+
+    .mobile-link {
+      display: flex;
+      align-items: center;
+      min-height: 56px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .mobile-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      padding-top: var(--space-6);
+    }
+  }
+
+  /* No JavaScript: show the menu links inline instead of a dead toggle. */
+  @media (max-width: 1023px) {
+    :global(html:not(.js)) .menu-toggle {
+      display: none;
+    }
+
+    :global(html:not(.js)) .mobile-menu {
+      position: static;
+      display: block;
+      box-shadow: none;
+    }
+  }
+</style>

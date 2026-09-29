@@ -1,0 +1,24 @@
+{
+  "name": "uyirailabs-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs",
+    "predev": "npm run tokens",
+    "dev": "astro dev",
+    "prebuild": "npm run tokens",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@vercel/analytics": "^2.0.1",
+    "astro": "^5.18.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.4",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,24 @@
+---
+// Mono chip (radius-sm) for tech stacks and feature facts. Label style, case as written.
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class:list={['chip t-label', className]}><slot /></span>
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    background: var(--surface-300);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-transform: none;
+    white-space: nowrap;
+  }
+</style>
