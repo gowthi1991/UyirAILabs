@@ -1,0 +1,144 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import Chip from '../ui/Chip.astro';
+import Icon from '../ui/Icon.astro';
+
+const services = [
+  {
+    icon: 'cpu',
+    title: 'AI and automation',
+    body: 'Assistants, agents and workflow automation that do real work inside your operations, with people approving what matters.',
+    chips: ['LLM APIs', 'RAG', 'Python', 'Workflows'],
+    wide: true,
+  },
+  {
+    icon: 'phone',
+    title: 'Web and mobile apps',
+    body: 'Customer apps, admin panels and PWAs with AI built in, on the phones your users already have.',
+    chips: ['Flutter', 'React', 'PWA'],
+  },
+  {
+    icon: 'layers',
+    title: 'SaaS product engineering',
+    body: 'From MVP to multi-tenant platform: architecture, roles and permissions, offline-first, billing.',
+    chips: ['Postgres', 'Supabase', 'RBAC'],
+  },
+  {
+    icon: 'pen',
+    title: 'UI/UX and design systems',
+    body: 'Product design, Figma design systems and prototypes that engineering can ship without guesswork.',
+    chips: ['Figma', 'Design tokens', 'Prototyping'],
+    wide: true,
+  },
+] as const;
+---
+
+<section id="services" class="section" aria-labelledby="services-title">
+  <div class="container inner">
+    <SectionHeading eyebrow="Services" lead="AI-native builds," rest="for your business." id="services-title" />
+    <ul class="grid" role="list">
+      {
+        services.map((s) => (
+          <li class:list={['cell', { wide: 'wide' in s && s.wide }]} data-reveal>
+            <a href="/?intent=project#contact" data-intent="project" class="card">
+              <span class="top">
+                <span class="icon">
+                  <Icon name={s.icon} size={28} />
+                </span>
+                <Icon name="arrow-right" size={20} stroke={2} class="go" />
+              </span>
+              <h3 class="t-title">{s.title}</h3>
+              <p class="t-body body">{s.body}</p>
+              <span class="chips">
+                {s.chips.map((c) => (
+                  <Chip>{c}</Chip>
+                ))}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+    margin: 0;
+  }
+  .wide {
+    grid-column: span 2;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    height: 100%;
+    min-height: 240px;
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    transition:
+      transform 250ms ease,
+      box-shadow 250ms ease,
+      border-color 250ms ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--pulse-text);
+    box-shadow: var(--shadow-raised);
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .icon {
+    color: var(--graphite);
+  }
+  .top :global(.go) {
+    color: var(--ink-muted);
+  }
+  .body {
+    flex-grow: 1;
+    color: var(--ink-muted);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .wide {
+      grid-column: span 1;
+    }
+  }
+  @media (max-width: 767px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .card {
+      padding: var(--space-6);
+      min-height: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card:hover {
+      transform: none;
+    }
+  }
+</style>

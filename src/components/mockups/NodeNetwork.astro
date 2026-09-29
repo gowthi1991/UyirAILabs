@@ -1,0 +1,60 @@
+---
+// Article header: a small node network with one travelling data pulse. Decorative.
+interface Props {
+  points: [number, number][];
+  duration: number;
+}
+
+const { points, duration } = Astro.props;
+const d = points.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x} ${y}`).join(' ');
+const last = points.length - 1;
+---
+
+<svg class="net theme-dark" viewBox="0 0 320 140" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  {points.slice(1).map(([x, y], i) => <path class="edge" d={`M${points[i][0]} ${points[i][1]} L${x} ${y}`} />)}
+  <path class="packet" d={d} style={`animation-duration:${duration}s`} />
+  {points.map(([x, y], i) => <circle class:list={['node', { end: i === 0 || i === last }]} cx={x} cy={y} r={i === 0 || i === last ? 5 : 3.5} />)}
+</svg>
+
+<style>
+  .net {
+    display: block;
+    width: 100%;
+    height: 140px;
+    background: var(--surface-100);
+  }
+  .edge {
+    stroke: var(--line);
+    stroke-width: 1.5;
+  }
+  .packet {
+    fill: none;
+    stroke: var(--pulse);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 28 1012;
+    stroke-dashoffset: 1040;
+    animation: flow 4s linear infinite;
+  }
+  .node {
+    fill: var(--surface-100);
+    stroke: var(--line-strong);
+    stroke-width: 1.5;
+  }
+  .node.end {
+    fill: var(--pulse);
+  }
+  @keyframes flow {
+    from {
+      stroke-dashoffset: 1040;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .packet {
+      display: none;
+    }
+  }
+</style>

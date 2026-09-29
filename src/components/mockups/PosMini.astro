@@ -1,0 +1,80 @@
+---
+// Firro POS counter screen (illustrative data).
+import MiniFrame from './MiniFrame.astro';
+
+const items = [
+  { name: 'Idli set', price: '₹60' },
+  { name: 'Pongal', price: '₹70' },
+  { name: 'Dosa', price: '₹80' },
+  { name: 'Meals', price: '₹120', on: true },
+  { name: 'Curd rice', price: '₹60' },
+  { name: 'Coffee', price: '₹25' },
+];
+---
+
+<MiniFrame>
+  <div class="pos">
+    <div class="items">
+      {
+        items.map((i) => (
+          <div class:list={['item', { on: i.on }]}>
+            <span class="t-label name">{i.name}</span>
+            <span class="t-label price">{i.price}</span>
+          </div>
+        ))
+      }
+    </div>
+    <div class="total t-label">
+      <span>Order #214 · ₹360</span><span>Pay</span>
+    </div>
+  </div>
+</MiniFrame>
+
+<style>
+  .pos {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    height: 100%;
+    padding: var(--space-2);
+  }
+  .items {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-1);
+  }
+  .item {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--surface-300);
+    border: 1px solid var(--line);
+    min-width: 0;
+  }
+  .item.on {
+    background: var(--pulse-soft);
+    border-color: var(--pulse);
+  }
+  .name {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .price {
+    color: var(--ink-muted);
+  }
+  .total {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--pulse);
+    color: var(--on-pulse);
+    font-family: var(--font-sans);
+    font-weight: 700;
+  }
+</style>

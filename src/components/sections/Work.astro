@@ -1,0 +1,108 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeading from '../ui/SectionHeading.astro';
+import FirroCollage from '../mockups/FirroCollage.astro';
+import StackMarquee from './StackMarquee.astro';
+import screenshot from '../../assets/native-nights-landing.png';
+---
+
+<section id="work" class="section" aria-labelledby="work-title" data-loop>
+  <div class="container inner">
+    <SectionHeading eyebrow="Work" lead="What we’ve" rest="shipped so far." id="work-title" />
+    <div class="cases">
+      <article class="case" data-reveal>
+        <FirroCollage />
+        <div class="text">
+          <p class="t-label">In-house product · SaaS · Flutter</p>
+          <h3 class="t-title">Firro: a four-app Kitchen OS, designed and built in-house</h3>
+          <p class="t-body body">
+            POS, kitchen admin, customer and delivery apps sharing one subscription engine, with an offline-first POS for
+            kitchen counters.
+          </p>
+        </div>
+      </article>
+      <article class="case" data-reveal>
+        <div class="shot">
+          <Image src={screenshot} alt="Native Nights web app" widths={[600, 1200]} sizes="(max-width: 767px) 100vw, 600px" loading="lazy" />
+        </div>
+        <div class="text">
+          <p class="t-label">In-house product · Social · React + Supabase</p>
+          <h3 class="t-title">Native Nights: live social rooms for the Tamil diaspora</h3>
+          <p class="t-body body">
+            A web app with host pages, sign-in and RSVP, live now. Weekly rooms run on Zoom while in-browser rooms are
+            being built.
+          </p>
+        </div>
+      </article>
+    </div>
+    <StackMarquee />
+  </div>
+</section>
+
+<style>
+  .inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-12);
+  }
+  .cases {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .case {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+    transition:
+      transform 250ms ease,
+      box-shadow 250ms ease,
+      border-color 250ms ease;
+  }
+  .case:hover {
+    transform: translateY(-4px);
+    border-color: var(--pulse-text);
+    box-shadow: var(--shadow-raised);
+  }
+  .shot {
+    height: 220px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--surface-300);
+  }
+  .shot :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top left;
+  }
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-1) var(--space-2) var(--space-2);
+  }
+  .body {
+    color: var(--ink-muted);
+  }
+  @media (max-width: 1024px) {
+    .cases {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 767px) {
+    .case {
+      padding: var(--space-4);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .case:hover {
+      transform: none;
+    }
+  }
+</style>

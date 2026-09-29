@@ -4,6 +4,10 @@ Decisions taken during builds. Newest first.
 
 | # | Task | Decision | Options considered | Why |
 | --- | --- | --- | --- | --- |
+| 17 | 03 | Service cards link to `/?intent=project#contact`; "Explore Firro" links to `/#work` (the Firro case study) | Self-links to `#services` / `#firro` as in the reference | A card with an arrow must go somewhere; self-links are dead links. |
+| 16 | 03 | "All services" and "All insights" buttons omitted | Keep them pointing at their own section | No index pages exist in v1; a button that goes nowhere fails the launch checklist ("no `#` placeholders"). Logged in TECH-DEBT. |
+| 15 | 03 | Small card titles (Firro app tiles, "Now building" rows) use the `button` style (15/20, 700) | `title` (20px) or an ad-hoc 16px bold | Reference uses 16px bold, which is not a named style; `title` wrapped the tile headers. |
+| 14 | 03 | Drawn mockups/illustrations keep their own tiny geometry (e.g. 2px toggle knob inset, 150px screens) | Force every inner offset onto the spacing scale | These are pictures of UI, not layout; the scale still governs all real layout spacing. |
 | 13 | 02 | Story is sticky only at ≥1025px wide AND ≥820px tall with motion allowed and JS on; otherwise static with step 1 active and click-to-switch | Sticky on every desktop | The pinned layout is ~800px tall; on short laptop screens it would be cut off. |
 | 12 | 02 | Hero subline uses `body-lg` (18/28) | Reference's 20/30 | 20/30 is not a named style; brand book says body-lg is for hero sublines. |
 | 11 | 02 | Mockup micro-text (KPI labels, tags, mock buttons) uses `label`/`small`/`title`/`heading` styles | Reference's ad-hoc 12px bold Manrope | "Type only the named styles." |

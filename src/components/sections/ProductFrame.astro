@@ -36,29 +36,8 @@ const { class: className } = Astro.props;
     overflow: hidden;
     isolation: isolate;
     text-align: left;
-  }
-
-  /* Rotating border beam (allowed loop): a conic sweep behind an inset panel. */
-  .beam::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: -2;
-    width: 140%;
-    aspect-ratio: 1;
-    background: conic-gradient(from 0deg, transparent 0deg, transparent 280deg, var(--pulse) 340deg, transparent 360deg);
-    transform: translate(-50%, -50%) rotate(0deg);
-    animation: beam 6s linear infinite;
-  }
-
-  .beam::after {
-    content: '';
-    position: absolute;
-    inset: 1.5px;
-    z-index: -1;
-    border-radius: calc(var(--radius-xl) - 2px);
-    background: var(--surface-200);
+    --beam-radius: var(--radius-xl);
+    --beam-bg: var(--surface-200);
   }
 
   .bar {
@@ -121,12 +100,6 @@ const { class: className } = Astro.props;
     text-align: right;
   }
 
-  @keyframes beam {
-    to {
-      transform: translate(-50%, -50%) rotate(360deg);
-    }
-  }
-
   @keyframes scan {
     0% {
       transform: translateY(-10%);
@@ -152,7 +125,6 @@ const { class: className } = Astro.props;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .beam::before,
     .scan::after {
       display: none;
     }

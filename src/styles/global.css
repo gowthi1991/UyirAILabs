@@ -182,3 +182,55 @@ textarea {
     scroll-behavior: auto !important;
   }
 }
+
+/* Rotating border beam (allowed loop): a conic sweep behind an inset panel.
+   Set --beam-radius and --beam-bg on the element. Transform-only animation. */
+.beam {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.beam::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -2;
+  width: max(140%, 1000px);
+  aspect-ratio: 1;
+  background: conic-gradient(from 0deg, transparent 0deg, transparent 280deg, var(--pulse) 340deg, transparent 360deg);
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: beam-spin 6s linear infinite;
+}
+
+.beam::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  z-index: -1;
+  border-radius: calc(var(--beam-radius, var(--radius-xl)) - 2px);
+  background: var(--beam-bg, var(--surface-200));
+}
+
+@keyframes beam-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Loops pause while their section is off-screen (see scripts/reveal.ts). */
+.is-offscreen,
+.is-offscreen *,
+.is-offscreen *::before,
+.is-offscreen *::after,
+.is-offscreen::before,
+.is-offscreen::after {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beam::before {
+    display: none;
+  }
+}

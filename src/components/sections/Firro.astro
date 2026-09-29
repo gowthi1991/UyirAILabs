@@ -1,0 +1,159 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import Label from '../ui/Label.astro';
+import Pill from '../ui/Pill.astro';
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import PosMini from '../mockups/PosMini.astro';
+import AdminMini from '../mockups/AdminMini.astro';
+import CustomerMini from '../mockups/CustomerMini.astro';
+import DeliveryMini from '../mockups/DeliveryMini.astro';
+
+const outcomes = [
+  'Pauses, skips and renewals handled without phone calls',
+  'AI plans tomorrow’s prep from today’s subscriptions',
+  'Direct orders from your own app — no aggregator commission',
+];
+const apps = [
+  { title: 'POS', tag: 'Counter', Mock: PosMini },
+  { title: 'Kitchen Admin', tag: 'Back office', Mock: AdminMini },
+  { title: 'Customer App', tag: 'Subscribers', Mock: CustomerMini },
+  { title: 'Delivery App', tag: 'Riders', Mock: DeliveryMini },
+];
+---
+
+<section id="firro" class="section" aria-labelledby="firro-title">
+  <div class="container grid">
+    <div class="copy" data-reveal>
+      <div class="meta">
+        <Label>Our flagship product</Label>
+        <Pill tone="amber">Pilot · Coimbatore</Pill>
+      </div>
+      <SectionHeading lead="Firro," rest="the AI Kitchen OS for subscription kitchens." id="firro-title" />
+      <p class="t-body-lg lede">
+        Tiffin services and subscription meal brands run on pauses, skips and tomorrow’s prep. Firro’s AI keeps track of
+        both, so the kitchen can cook instead of chasing spreadsheets.
+      </p>
+      <ul class="outcomes" role="list">
+        {
+          outcomes.map((o) => (
+            <li class="t-body">
+              <span class="tick">
+                <Icon name="check" size={14} stroke={2.5} />
+              </span>
+              {o}
+            </li>
+          ))
+        }
+      </ul>
+      <div class="ctas">
+        <Button href="/?intent=firro#contact" intent="firro" arrow>Book a Firro demo</Button>
+        <Button href="/#work" variant="text" arrow class="explore">Explore Firro</Button>
+      </div>
+    </div>
+
+    <ul class="apps" role="list" aria-label="The four Firro apps">
+      {
+        apps.map(({ title, tag, Mock }) => (
+          <li class="app" data-reveal>
+            <div class="app-head">
+              <h3 class="t-button">{title}</h3>
+              <span class="t-label">{tag}</span>
+            </div>
+            <Mock />
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-16);
+    align-items: center;
+  }
+  .copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .lede {
+    max-width: 540px;
+    color: var(--ink-muted);
+  }
+  .outcomes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin: 0;
+  }
+  .outcomes li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+  }
+  .tick {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-pill);
+    background: var(--pulse-soft);
+    color: var(--pulse-text);
+  }
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+  }
+  .ctas :global(.explore) {
+    color: var(--ink);
+  }
+  .apps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-4);
+    margin: 0;
+  }
+  .app {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-width: 0;
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+  }
+  .app-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+  .app-head .t-label {
+    white-space: nowrap;
+  }
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-12);
+    }
+  }
+  @media (max-width: 479px) {
+    .apps {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

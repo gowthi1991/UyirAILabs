@@ -39,3 +39,20 @@
 **Could not verify:** real devices; screen reader announcement of the story card change.
 
 **Notes:** typing effect reveals characters by opacity (width animation is not an allowed property); the full eyebrow text is in a visually-hidden span for screen readers.
+
+## Task 03 — plan
+
+- `sections/Firro.astro`: label + amber "Pilot · Coimbatore" pill, two-tone heading, lede, three outcomes with check icons, "Book a Firro demo" (`/?intent=firro#contact`, `data-intent`) + "Explore Firro", 2×2 app tiles with `PosMini`, `AdminMini`, `CustomerMini`, `DeliveryMini` (shared dark `MiniFrame`, `aria-hidden`).
+- `sections/NativeNights.astro`: dark band (`theme-dark`) inside the light sheet with the shared `.beam` utility, lavender second line, four mono chips, plum pill "Find a room" → `NATIVE_NIGHTS_URL` (falls back to `/?intent=other#contact` while empty), screenshot via Astro `<Image>` (AVIF/WebP widths, lazy) in a browser frame.
+- `sections/Services.astro`: two-tone heading, 4 cards (AI + UI/UX span 2), graphite icons, tech chips, hover lift.
+- `sections/Work.astro` + `mockups/FirroCollage.astro` + `sections/StackMarquee.astro`: two case cards, rotated mini-screen collage, cropped screenshot, marquee with an `aria-hidden` duplicate.
+- `sections/Insights.astro` + `mockups/NodeNetwork.astro`: "Now building" list with Pilot/Building/Exploring pills; three article cards with node-network headers (travelling pulse), linking to `/#insights`.
+- Move the border beam to a global `.beam` utility (`--beam-radius`, `--beam-bg`); add the `.is-offscreen` pause rule.
+
+## Task 03 — result
+
+**Built:** all of the above; build passes (0 errors). Full-page screenshot at 1440×900 checked against the reference.
+
+**Could not verify:** real devices; the Native Nights link target (URL not supplied yet).
+
+**TODOs / tech debt:** blog pages pending (article cards link to `/#insights`); no Services or Insights index pages, so the reference's "All services" / "All insights" buttons are left out (see DECISIONS #16).

@@ -1,0 +1,157 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import Pill from '../ui/Pill.astro';
+import Icon from '../ui/Icon.astro';
+import NodeNetwork from '../mockups/NodeNetwork.astro';
+
+type Status = 'Pilot' | 'Building' | 'Exploring';
+const tone = { Pilot: 'pulse', Building: 'amber', Exploring: 'graphite' } as const;
+
+const building: { title: string; body: string; status: Status }[] = [
+  { title: 'Firro POS', body: 'Offline-first counter app for busy lunch hours.', status: 'Pilot' },
+  { title: 'Firro customer app', body: 'Subscriptions with one-tap pause and skip.', status: 'Pilot' },
+  { title: 'Native Nights', body: 'Hosted weekly rooms for Tamil speakers abroad. Web app live; in-browser rooms next.', status: 'Building' },
+  { title: 'AI prep planning', body: 'Tomorrow’s prep drafted from today’s plans.', status: 'Building' },
+  { title: 'Nutrition database', body: 'Ingredient-level nutrition for Indian home recipes.', status: 'Building' },
+  { title: 'Public meal-scheme kitchens', body: 'Firro for government and institutional kitchens.', status: 'Exploring' },
+];
+
+const articles: { tag: string; title: string; body: string; read: string; duration: number; points: [number, number][] }[] = [
+  {
+    tag: 'Product thinking',
+    title: 'Designing AI that waits for your yes',
+    body: 'Why every Firro suggestion needs a person’s approval, and how we built the review flow around it.',
+    read: '6 min read',
+    duration: 3.7,
+    points: [[88, 92], [52, 52], [80, 83], [250, 80], [214, 120], [127, 32], [269, 23]],
+  },
+  {
+    tag: 'Engineering',
+    title: 'An offline-first POS for Indian kitchen counters',
+    body: 'What should happen when the internet drops at 12:30 on a weekday, and how we designed for it.',
+    read: '8 min read',
+    duration: 4.4,
+    points: [[48, 31], [63, 66], [106, 114], [177, 52], [128, 97], [38, 94], [101, 75]],
+  },
+  {
+    tag: 'Data',
+    title: 'Nutrition data for sambar, kootu and everything between',
+    body: 'Building an ingredient database for the food Indian kitchens actually cook.',
+    read: '7 min read',
+    duration: 5.1,
+    points: [[141, 95], [298, 36], [209, 97], [262, 100], [53, 97], [26, 80], [152, 90]],
+  },
+];
+---
+
+<section id="insights" class="section" aria-labelledby="insights-title" data-loop>
+  <div class="container inner">
+    <SectionHeading eyebrow="AI-native insights" lead="What we’re building," rest="and what we’re learning." id="insights-title" />
+    <div class="grid">
+      <div class="now">
+        <h3 class="t-label now-title">Now building</h3>
+        <ul role="list">
+          {
+            building.map((b) => (
+              <li class="row">
+                <div>
+                  <p class="t-button">{b.title}</p>
+                  <p class="t-small muted">{b.body}</p>
+                </div>
+                <Pill tone={tone[b.status]} variant="soft" uppercase live>{b.status}</Pill>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <ul class="articles" role="list">
+        {
+          articles.map((a) => (
+            <li data-reveal>
+              <a href="/#insights" class="article">
+                <NodeNetwork points={a.points} duration={a.duration} />
+                <div class="article-body">
+                  <span class="t-label">{a.tag}</span>
+                  <h3 class="t-title">{a.title}</h3>
+                  <span class="t-body muted grow">{a.body}</span>
+                  <span class="foot">
+                    <span class="t-label">{a.read}</span>
+                    <Icon name="arrow-right" size={18} stroke={2} />
+                  </span>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .inner { display: flex; flex-direction: column; gap: var(--space-12); }
+  .grid {
+    display: grid;
+    grid-template-columns: 400px minmax(0, 1fr);
+    gap: var(--space-12);
+    align-items: start;
+  }
+  .now ul, .articles { margin: 0; }
+  .now-title { padding-bottom: var(--space-2); }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-4);
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--line);
+  }
+  .muted { color: var(--ink-muted); }
+  .articles {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .articles li { display: flex; }
+  .article {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-radius: var(--radius-lg);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    color: var(--ink);
+    text-decoration: none;
+    transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+  }
+  .article:hover {
+    transform: translateY(-4px);
+    border-color: var(--pulse-text);
+    box-shadow: var(--shadow-raised);
+  }
+  .article-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: var(--space-3);
+    padding: var(--space-6);
+  }
+  .grow { flex-grow: 1; }
+  .foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--pulse-text);
+  }
+  .foot .t-label { color: var(--ink); }
+  @media (max-width: 1279px) {
+    .grid { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 1024px) {
+    .articles { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .article:hover { transform: none; }
+  }
+</style>

@@ -1,0 +1,74 @@
+---
+// Firro kitchen admin: meals per day this week (illustrative data).
+import MiniFrame from './MiniFrame.astro';
+
+const days = [
+  { d: 'M', v: 50 },
+  { d: 'T', v: 57 },
+  { d: 'W', v: 47 },
+  { d: 'T', v: 62 },
+  { d: 'F', v: 67 },
+  { d: 'S', v: 54 },
+  { d: 'S', v: 72, today: true },
+];
+---
+
+<MiniFrame>
+  <div class="admin">
+    <div class="head t-label">
+      <span>Meals / day</span><span class="up">+12%</span>
+    </div>
+    <div class="bars">
+      {
+        days.map((b) => (
+          <div class="col">
+            <span class:list={['bar', { today: b.today }]} style={`height:${b.v}px`} />
+            <span class="t-label day">{b.d}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</MiniFrame>
+
+<style>
+  .admin {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    height: 100%;
+    padding: var(--space-2) var(--space-3);
+  }
+  .head {
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase !important;
+  }
+  .up {
+    color: var(--pulse-text);
+  }
+  .bars {
+    display: flex;
+    flex-grow: 1;
+    gap: var(--space-2);
+  }
+  .col {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-1);
+  }
+  .bar {
+    width: 100%;
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    background: var(--line-strong);
+  }
+  .bar.today {
+    background: var(--pulse);
+  }
+  .day {
+    color: var(--ink-muted);
+  }
+</style>

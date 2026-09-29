@@ -1,0 +1,168 @@
+---
+// Native Nights: dark band inside the light sheet, in its own plum/lavender accents.
+import { Image } from 'astro:assets';
+import Label from '../ui/Label.astro';
+import Pill from '../ui/Pill.astro';
+import Chip from '../ui/Chip.astro';
+import Icon from '../ui/Icon.astro';
+import screenshot from '../../assets/native-nights-landing.png';
+import { NATIVE_NIGHTS_URL } from '../../data/company';
+
+const facts = ['4–10 people a room', 'No app to install', 'Verified members', 'Women-hosted rooms'];
+const roomHref = NATIVE_NIGHTS_URL || '/?intent=other#contact';
+const external = Boolean(NATIVE_NIGHTS_URL);
+---
+
+<section class="nn-section" aria-labelledby="nn-title">
+  <div class="container">
+    <div id="native-nights" class="band beam theme-dark" data-loop data-reveal>
+      <div class="copy">
+        <div class="meta">
+          <Label dot>Our second product</Label>
+          <Pill tone="amber" uppercase>Web app live</Pill>
+        </div>
+        <h2 class="t-display-lg" id="nn-title">
+          <span>Native Nights,</span>
+          <span class="lavender">home banter, abroad.</span>
+        </h2>
+        <p class="t-body-lg lede">
+          Moving abroad often means losing the easy, familiar banter of home. Native Nights brings it back: small live
+          rooms for Tamil speakers overseas, run every week by friendly hosts.
+        </p>
+        <div class="chips">
+          {facts.map((f) => <Chip>{f.toUpperCase()}</Chip>)}
+        </div>
+        <div class="cta-row">
+          <a
+            class="plum t-button"
+            href={roomHref}
+            target={external ? '_blank' : undefined}
+            rel={external ? 'noopener' : undefined}
+          >
+            Find a room<Icon name="arrow-right" size={18} stroke={2} />
+          </a>
+          <p class="t-small hint">Tap a link, RSVP, join in about a minute.</p>
+        </div>
+      </div>
+
+      <figure class="browser">
+        <div class="browser-bar" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <span class="t-small url">native nights · this week’s rooms</span>
+        </div>
+        <Image
+          src={screenshot}
+          alt="Native Nights web app: this week’s rooms with RSVP cards"
+          widths={[560, 1120]}
+          sizes="(max-width: 1024px) 100vw, 560px"
+          loading="lazy"
+        />
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .nn-section {
+    padding-bottom: var(--section-pad);
+  }
+  .band {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 560px;
+    gap: var(--space-12);
+    align-items: center;
+    padding: var(--space-12);
+    border-radius: var(--radius-xl);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+    --beam-radius: var(--radius-xl);
+    --beam-bg: var(--surface-200);
+  }
+  .copy {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    min-width: 0;
+  }
+  .meta,
+  .chips,
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+  .chips {
+    gap: var(--space-2);
+  }
+  h2 span {
+    display: block;
+  }
+  .lavender {
+    color: var(--nn-lavender);
+  }
+  .lede {
+    max-width: 600px;
+    color: var(--ink-muted);
+  }
+  .plum {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 48px;
+    padding: 0 var(--space-6);
+    border-radius: var(--radius-pill);
+    background: var(--nn-plum);
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .plum:focus-visible {
+    outline-color: var(--nn-lavender);
+  }
+  .hint {
+    color: var(--ink-muted);
+  }
+  .browser {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface-300);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-raised);
+  }
+  .browser-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: 32px;
+    padding: 0 var(--space-3);
+    border-bottom: 1px solid var(--line);
+  }
+  .browser-bar > span:not(.url) {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background: var(--line-strong);
+  }
+  .url {
+    margin-left: var(--space-2);
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+  }
+  .browser :global(img) {
+    width: 100%;
+    height: auto;
+  }
+  @media (max-width: 1024px) {
+    .band {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+  @media (max-width: 767px) {
+    .band {
+      padding: var(--space-6);
+    }
+    .url {
+      display: none;
+    }
+  }
+</style>

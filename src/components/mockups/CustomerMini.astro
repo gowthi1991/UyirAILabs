@@ -1,0 +1,70 @@
+---
+// Firro customer app: a subscriber's plan with one-tap pause (illustrative data).
+import MiniFrame from './MiniFrame.astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<MiniFrame class={className}>
+  <div class="phone">
+    <span class="t-label muted">Veg Lunch plan</span>
+    <span class="t-small strong">Tomorrow, 12:30</span>
+    <span class="row">
+      <span class="t-label">Pause tomorrow</span>
+      <span class="toggle"><span class="knob"></span></span>
+    </span>
+    <span class="t-label muted">12 MEALS LEFT</span>
+  </div>
+</MiniFrame>
+
+<style>
+  .phone {
+    position: absolute;
+    left: 50%;
+    top: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    width: 150px;
+    height: 180px;
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--line-strong);
+    background: var(--surface-200);
+    transform: translateX(-50%);
+  }
+  .muted {
+    color: var(--ink-muted);
+  }
+  .strong {
+    font-weight: 700;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--surface-300);
+  }
+  .toggle {
+    position: relative;
+    width: 28px;
+    height: 16px;
+    border-radius: var(--radius-pill);
+    background: var(--pulse);
+  }
+  .knob {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-pill);
+    background: var(--on-pulse);
+  }
+</style>

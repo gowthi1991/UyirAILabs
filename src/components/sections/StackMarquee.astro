@@ -1,0 +1,80 @@
+---
+// "Stack we ship with": a looping marquee (allowed loop). The second copy is aria-hidden.
+import Chip from '../ui/Chip.astro';
+
+const stack = ['Flutter', 'React / Next.js', 'Node.js', 'Postgres', 'Supabase', 'Vercel', 'PostHog', 'Python', 'LLM APIs', 'Figma'];
+---
+
+<div class="stack">
+  <p class="t-label" id="stack-label">Stack we ship with</p>
+  <div class="mask">
+    <div class="track">
+      <ul class="list" role="list" aria-labelledby="stack-label">
+        {stack.map((s) => <li><Chip>{s}</Chip></li>)}
+      </ul>
+      <ul class="list" role="list" aria-hidden="true">
+        {stack.map((s) => <li><Chip>{s}</Chip></li>)}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .stack {
+    display: flex;
+    align-items: center;
+    gap: var(--space-6);
+  }
+  .stack > p {
+    flex-shrink: 0;
+  }
+  .mask {
+    flex-grow: 1;
+    min-width: 0;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, var(--ink) 8%, var(--ink) 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, var(--ink) 8%, var(--ink) 92%, transparent);
+  }
+  .track {
+    display: flex;
+    width: max-content;
+    animation: marquee 22s linear infinite;
+  }
+  .list {
+    display: flex;
+    gap: var(--space-2);
+    margin: 0;
+    padding-right: var(--space-2);
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (max-width: 767px) {
+    .stack {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+    .mask {
+      width: 100%;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      animation: none;
+      width: auto;
+    }
+    .list {
+      flex-wrap: wrap;
+    }
+    .list[aria-hidden='true'] {
+      display: none;
+    }
+    .mask {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  }
+</style>

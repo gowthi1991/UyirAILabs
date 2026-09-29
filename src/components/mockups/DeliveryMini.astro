@@ -1,0 +1,51 @@
+---
+// Firro delivery app: a rider's route with two stops done (illustrative data).
+import MiniFrame from './MiniFrame.astro';
+---
+
+<MiniFrame>
+  <svg viewBox="0 0 260 150" preserveAspectRatio="xMidYMid slice">
+    <path class="route" d="M20 120 C60 120 60 70 100 70 S150 110 180 80 S230 30 245 30" />
+    <path class="done" d="M20 120 C60 120 60 70 100 70" />
+    <circle class="stop-done" cx="20" cy="120" r="6" />
+    <circle class="stop-done" cx="100" cy="70" r="6" />
+    <circle class="stop" cx="180" cy="80" r="6" />
+    <circle class="stop" cx="245" cy="30" r="6" />
+  </svg>
+  <span class="eta t-label">ROUTE 3 · ETA 12:40</span>
+</MiniFrame>
+
+<style>
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  .route {
+    fill: none;
+    stroke: var(--line-strong);
+    stroke-width: 2;
+    stroke-dasharray: 4 6;
+  }
+  .done {
+    fill: none;
+    stroke: var(--pulse);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+  .stop-done {
+    fill: var(--pulse);
+  }
+  .stop {
+    fill: var(--surface-100);
+    stroke: var(--line-strong);
+    stroke-width: 2;
+  }
+  .eta {
+    position: absolute;
+    left: var(--space-2);
+    top: var(--space-2);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--surface-300);
+  }
+</style>

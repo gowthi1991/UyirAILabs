@@ -1,0 +1,56 @@
+---
+// Firro case-study collage: three mini screens, slightly rotated. Decorative image.
+import AdminMini from './AdminMini.astro';
+import PosMini from './PosMini.astro';
+import CustomerMini from './CustomerMini.astro';
+---
+
+<div class="collage theme-dark" role="img" aria-label="Firro apps: kitchen admin chart, POS counter and customer app, shown as illustrative screens.">
+  <div class="piece admin"><AdminMini /></div>
+  <div class="piece pos"><PosMini /></div>
+  <div class="piece customer"><CustomerMini /></div>
+</div>
+
+<style>
+  .collage {
+    position: relative;
+    height: 220px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface-100);
+    border: 1px solid var(--line);
+  }
+  .piece {
+    position: absolute;
+  }
+  .admin {
+    left: 4%;
+    top: var(--space-6);
+    width: 52%;
+    transform: rotate(-3deg);
+  }
+  .pos {
+    left: 38%;
+    top: var(--space-12);
+    width: 48%;
+    transform: rotate(2deg);
+  }
+  .customer {
+    right: var(--space-4);
+    top: var(--space-4);
+    width: 170px;
+  }
+  @media (max-width: 479px) {
+    .customer {
+      display: none;
+    }
+    .pos {
+      left: auto;
+      right: 4%;
+      width: 56%;
+    }
+    .admin {
+      width: 60%;
+    }
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+// Dark 150px screen used by the four Firro mini mockups. Decorative (aria-hidden).
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={['mini theme-dark', className]} aria-hidden="true">
+  <slot />
+</div>
+
+<style>
+  .mini {
+    position: relative;
+    height: 150px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface-100);
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+
+  .mini :global(.t-label) {
+    text-transform: none;
+    letter-spacing: normal;
+  }
+</style>
