@@ -1,11 +1,9 @@
 ---
 import Button from '../ui/Button.astro';
 import LiveDot from '../ui/LiveDot.astro';
+import TypingText from '../ui/TypingText.astro';
 import CircuitTraces from '../mockups/CircuitTraces.astro';
 import ProductFrame from './ProductFrame.astro';
-
-const eyebrow = 'AI-native software studio · Coimbatore';
-const chars = [...eyebrow];
 ---
 
 <section id="top" class="hero dots" data-loop>
@@ -13,10 +11,7 @@ const chars = [...eyebrow];
   <div class="container inner">
     <p class="eyebrow rise t-label">
       <LiveDot />
-      <span class="visually-hidden">{eyebrow}</span>
-      <span class="typing" aria-hidden="true">
-        {chars.map((c, i) => <span style={`--i:${i}`}>{c}</span>)}<span class="caret"></span>
-      </span>
+      <TypingText text="AI-native software studio · Coimbatore" />
     </p>
 
     <h1 class="title t-display-hero">
@@ -67,27 +62,6 @@ const chars = [...eyebrow];
     align-items: center;
     gap: var(--space-2);
     color: var(--ink);
-  }
-
-  .typing {
-    display: inline;
-    white-space: pre-wrap;
-  }
-
-  .typing > span:not(.caret) {
-    opacity: 0;
-    animation: type-in 1ms linear forwards;
-    animation-delay: calc(300ms + var(--i) * 47ms);
-  }
-
-  .caret {
-    display: inline-block;
-    width: 2px;
-    height: var(--lh-label);
-    margin-left: var(--space-1);
-    background: var(--pulse);
-    animation: caret 0.9s step-end 6;
-    opacity: 0;
   }
 
   .title {
@@ -154,19 +128,6 @@ const chars = [...eyebrow];
       transform: none;
     }
   }
-  @keyframes type-in {
-    to {
-      opacity: 1;
-    }
-  }
-  @keyframes caret {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0;
-    }
-  }
   @keyframes sweep {
     0% {
       background-position: 120% 0;
@@ -185,13 +146,9 @@ const chars = [...eyebrow];
 
   @media (prefers-reduced-motion: reduce) {
     .rise,
-    :global(.frame-rise),
-    .typing > span:not(.caret) {
+    :global(.frame-rise) {
       animation: none;
       opacity: 1;
-    }
-    .caret {
-      display: none;
     }
     .sweep {
       animation: none;

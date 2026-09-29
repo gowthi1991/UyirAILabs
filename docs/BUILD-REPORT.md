@@ -108,3 +108,53 @@
 **Could not verify:** Rich Results / schema validator on the live URL; OG preview in WhatsApp/LinkedIn (needs the public URL); Vercel Analytics collecting (only works on Vercel — locally its script request 404s).
 
 **TODOs:** lawyer review of Privacy and Terms → set `draft: false` in `content/*.md`; LinkedIn URL (adds `sameAs`).
+
+## Task 07 — plan
+
+- Walk docs/LAUNCH-CHECKLIST.md and mark each item pass / fail / not verifiable here.
+- Code audit against CLAUDE.md: hardcoded colours, off-scale spacing/radius, file-size limits, script-block size, dead links.
+- Lighthouse mobile on `npm run build && npm run preview` for `/`, `/privacy/`, `/404`; measure shipped JS.
+- Deployment prep (no deploy): confirm Vercel settings; list the exact steps.
+
+## Task 07 — result
+
+**Fixed during QA:** `Hero.astro`, `Header.astro` and `Footer.astro` were just over the 200-line / 150-CSS-line limits → typing effect moved to `ui/TypingText.astro`, nav data to `src/data/navigation.ts`. Audit afterwards: no hex/rgb/named colours outside `tokens.css`; no off-scale spacing or radius in layout (only 1–2px borders, the visually-hidden utility and drawn mockup geometry — DECISIONS #14); all files within limits; 158 links across 5 pages, 0 broken, 0 `#` placeholders.
+
+**Lighthouse mobile (Lighthouse 12, local `astro preview`):**
+
+| Page | Perf | A11y | Best practices | SEO | LCP | CLS |
+| --- | --- | --- | --- | --- | --- | --- |
+| `/` | 99 | 100 | 96 | 100 | 2.2 s | 0 |
+| `/privacy/` | 99 | 100 | 96 | 100 | 2.0 s | 0 |
+| `/404` (as `/404.html`) | 99 | 100 | 96 | 69 | 2.1 s | 0 |
+
+Best Practices is 96 only because the Vercel Analytics script (`/_vercel/insights/script.js`) 404s outside Vercel; it should be 100 once deployed. 404 SEO is 69 by design (`noindex`). Lighthouse refuses to score a real 404 response, so `/404.html` was measured.
+
+**JS shipped:** 4.3 KB gzipped on Home (all inline module scripts, including Vercel Analytics); budget 30 KB. CSS is inlined (≈10 KB gz). Native Nights screenshot served as WebP at 560/1120 (and 600/1200) widths, lazy.
+
+**Launch checklist**
+
+| Item | Status |
+| --- | --- |
+| Founder photo | Not supplied — GV monogram shown (drop `src/assets/founder.jpg` to switch) |
+| Native Nights URL | **TODO** — "Find a room" falls back to the contact form |
+| WhatsApp number | **TODO** — WhatsApp buttons hidden |
+| LinkedIn URL | **TODO** — LinkedIn links hidden |
+| "Now building" statuses | Needs your confirmation (copied from the design) |
+| Process commitments ("one business day", "working build every week") | Needs your confirmation |
+| Tech stack chips | Needs your confirmation |
+| hello@ mailbox + Web3Forms key | **TODO** — form shows an error + mailto until the key is set |
+| Privacy/Terms lawyer review → `draft: false` | **TODO** — draft banner showing |
+| GSTIN | Pending — renders nothing while `null` |
+| Lighthouse ≥ 90/95/95/95 on Home | Pass (99/100/96/100 locally) |
+| No horizontal scroll at 360px | Pass (checked 360, 390, 768, 1024, 1280, 1440) · real Android/iPhone: not verifiable here |
+| Keyboard-only walkthrough | Pass — 60 tab stops, every one with a visible focus ring, logical order |
+| Reduced motion | Pass — no animation, all content visible, story not pinned |
+| Every form intent arrives in the inbox; error and no-JS paths | Partly — validation, intent preselect, in-page intent switching and the not-configured error verified; live delivery and no-JS POST **not verifiable** without the key |
+| All links resolve, no `#` placeholders | Pass |
+| Favicon, OG image | Favicon + `og.png` in place · social preview not verifiable until live |
+| sitemap, robots.txt, llms.txt | Pass (in `dist/`) |
+| Company facts | Pass — name, CIN, Udyam, address from `company.ts` |
+| Go-live items (Vercel, domain, www redirect, Search Console, Zoho SPF/DKIM/DMARC) | Not done — your steps below |
+
+**Deployment:** static Astro needs no `vercel.json`. Vercel settings: Framework **Astro**, Build `npm run build`, Output `dist`, Node 20+. Steps for you (docs/DEPLOY.md): (1) import `gowthi1991/UyirAILabs` in Vercel; (2) add `PUBLIC_WEB3FORMS_KEY` (Production + Preview) and enable Web Analytics; (3) deploy and check the `*.vercel.app` URL on your phone; (4) add `uyirailabs.com` + `www` in Vercel → Domains and create exactly the A/CNAME records Vercel shows, keeping Zoho's MX/TXT records; (5) Search Console → submit `https://uyirailabs.com/sitemap-index.xml`.

@@ -1,0 +1,61 @@
+---
+// Types a short line once (per-character opacity, never width). Screen readers get the
+// full text from a visually-hidden copy; the animated characters are aria-hidden.
+interface Props {
+  text: string;
+  delay?: number;
+  step?: number;
+}
+
+const { text, delay = 300, step = 47 } = Astro.props;
+const chars = [...text];
+---
+
+<span class="visually-hidden">{text}</span>
+<span class="typing" aria-hidden="true" style={`--delay:${delay}ms;--step:${step}ms`}>
+  {chars.map((c, i) => <span class="ch" style={`--i:${i}`}>{c}</span>)}<span class="caret"></span>
+</span>
+
+<style>
+  .typing {
+    display: inline;
+    white-space: pre-wrap;
+  }
+  .ch {
+    opacity: 0;
+    animation: type-in 1ms linear forwards;
+    animation-delay: calc(var(--delay) + var(--i) * var(--step));
+  }
+  .caret {
+    display: inline-block;
+    width: 2px;
+    height: var(--lh-label);
+    margin-left: var(--space-1);
+    vertical-align: middle;
+    background: var(--pulse);
+    opacity: 0;
+    animation: caret 0.9s step-end 6;
+  }
+  @keyframes type-in {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes caret {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ch {
+      animation: none;
+      opacity: 1;
+    }
+    .caret {
+      display: none;
+    }
+  }
+</style>

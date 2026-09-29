@@ -2,12 +2,7 @@
 import Button from '../ui/Button.astro';
 import Icon from '../ui/Icon.astro';
 
-const links = [
-  { href: '/#firro', label: 'Products' },
-  { href: '/#services', label: 'Services' },
-  { href: '/#work', label: 'Work' },
-  { href: '/#about', label: 'About' },
-];
+import { headerLinks as links } from '../../data/navigation';
 ---
 
 <header class="site-header" data-header>
