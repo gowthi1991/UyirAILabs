@@ -7,5 +7,5 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'ignore',
   integrations: [sitemap({ filter: (page) => !page.includes('/thanks') })],
-  build: { inlineStylesheets: 'auto' },
+  build: { inlineStylesheets: 'always' },
 });

@@ -140,12 +140,12 @@ const links = [
       cursor: pointer;
     }
 
-    .menu-toggle .icon-close,
-    .menu-toggle[aria-expanded='true'] .icon-open {
+    .menu-toggle :global(.icon-close),
+    .menu-toggle[aria-expanded='true'] :global(.icon-open) {
       display: none;
     }
 
-    .menu-toggle[aria-expanded='true'] .icon-close {
+    .menu-toggle[aria-expanded='true'] :global(.icon-close) {
       display: block;
     }
 

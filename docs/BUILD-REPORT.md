@@ -74,3 +74,19 @@
 **Could not verify:** a live Web3Forms submission (no key yet) for any intent; the no-JS POST + redirect to `/thanks`; screen reader announcements of the error/success states.
 
 **TODOs:** `PUBLIC_WEB3FORMS_KEY` in `.env` and Vercel; founder photo → `src/assets/founder.jpg`; LinkedIn URL and WhatsApp number in `company.ts`.
+
+## Task 05 — plan
+
+- Type steps in `global.css` via the generated `--fs-*`/`--lh-*` variables: display-hero 96 → 56 (≤1024) → 44 (≤768); display-xl 64 → 44 and display-lg 44 → 32 (≤768).
+- Gutters 120/64/48/24 (Task 01), section padding 96 → 64 below 768; grids collapse per the task in each section; Native Nights stacks with the screenshot below; hero mock shows only the table area ≤767 (sidebar, AI column and the Batches column hidden) with a 120px overlap; circuit traces hidden < 1024; hamburger < 1024 with 44px targets.
+- `scripts/reveal.ts`: IntersectionObserver (threshold 0.15) adds `.is-visible` to `[data-reveal]` once (small stagger); the same script toggles `.is-offscreen` on `[data-loop]` sections so every loop pauses off-screen. No-JS and reduced motion: content visible.
+- Audit loops against the brand-book list (non-listed loops were already drawn still in Tasks 02–04).
+- Check for horizontal scroll at 360–1280 and run Lighthouse mobile on build + preview.
+
+## Task 05 — result
+
+**Built:** all of the above. Fixed while testing: the 1440px circuit SVG caused horizontal scroll at 1024–1280 (hero now `overflow-x: clip`); the menu toggle showed both icons and the frame's entrance didn't run (parent-scoped styles don't reach child components — switched to `:global`); reveals inside paused loop sections could stay hidden (entrances are now exempt from the pause); tighter mobile hero padding; smaller story-card overlap on mobile. CSS is now inlined (`inlineStylesheets: 'always'`), which removed the render-blocking request.
+
+**Measured (production build, `astro preview`, Lighthouse 12 mobile, local machine):** Performance 99 · Accessibility 100 · Best Practices 100 · SEO 100; LCP 2.0–2.2 s, CLS 0, TBT 0 ms. JS shipped on Home: 2.6 KB gzipped (inline module scripts). No horizontal scroll at 360, 390, 768, 1024, 1280, 1440.
+
+**Could not verify:** real Android/iPhone devices and real 4G; Lighthouse on the deployed Vercel URL.

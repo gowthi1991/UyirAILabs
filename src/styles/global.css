@@ -238,3 +238,54 @@ textarea {
     display: none;
   }
 }
+
+/* Scroll reveals: hidden only when JS runs; plays once (see scripts/reveal.ts).
+   Fill mode `backwards` so hover transforms still work after the entrance. */
+html.js [data-reveal]:not(.is-visible) {
+  opacity: 0;
+}
+
+html.js [data-reveal].is-visible {
+  animation: reveal-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+}
+
+/* Entrances are never paused by the off-screen loop pause. */
+[data-reveal].is-visible {
+  animation-play-state: running !important;
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js [data-reveal]:not(.is-visible) {
+    opacity: 1;
+  }
+}
+
+/* Responsive type steps (Task 05). */
+@media (max-width: 1024px) {
+  :root {
+    --fs-display-hero: 56px;
+    --lh-display-hero: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --fs-display-hero: 44px;
+    --lh-display-hero: 50px;
+    --fs-display-xl: 44px;
+    --lh-display-xl: 50px;
+    --fs-display-lg: 32px;
+    --lh-display-lg: 38px;
+  }
+}

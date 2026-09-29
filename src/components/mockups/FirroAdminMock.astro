@@ -43,13 +43,13 @@ const rows = [
       }
     </div>
     <div class="table">
-      <div class="tr th t-label"><span>Item</span><span>Qty</span><span>Batches</span><span>Status</span></div>
+      <div class="tr th t-label"><span>Item</span><span>Qty</span><span class="batches">Batches</span><span>Status</span></div>
       {
         rows.map((r) => (
           <div class="tr t-small">
             <span>{r.item}</span>
             <span class="muted">{r.qty}</span>
-            <span class="muted">{r.batches}</span>
+            <span class="muted batches">{r.batches}</span>
             <span><span class:list={['tag t-label', { ai: r.ai }]}>{r.ai ? 'AI draft' : 'Approved'}</span></span>
           </div>
         ))
@@ -154,6 +154,7 @@ const rows = [
   }
   .tag {
     display: inline-flex;
+    white-space: nowrap;
     padding: var(--space-1) var(--space-2);
     border-radius: var(--radius-sm);
     background: var(--surface-300);
@@ -177,6 +178,12 @@ const rows = [
     }
     .kpis {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .tr {
+      grid-template-columns: 1.6fr 1fr 1.2fr;
+    }
+    .batches {
+      display: none;
     }
   }
 </style>

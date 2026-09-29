@@ -35,7 +35,7 @@ const chars = [...eyebrow];
       <Button href="/#firro" variant="text" arrow>See Firro</Button>
     </div>
 
-    <ProductFrame class="rise frame-rise" />
+    <ProductFrame class="frame-rise" />
   </div>
 </section>
 
@@ -49,6 +49,7 @@ const chars = [...eyebrow];
     position: relative;
     z-index: 2;
     isolation: isolate;
+    overflow-x: clip;
     padding-top: var(--space-30);
     background-color: var(--surface-100);
     text-align: center;
@@ -69,8 +70,8 @@ const chars = [...eyebrow];
   }
 
   .typing {
-    display: inline-flex;
-    white-space: pre;
+    display: inline;
+    white-space: pre-wrap;
   }
 
   .typing > span:not(.caret) {
@@ -138,7 +139,8 @@ const chars = [...eyebrow];
     animation-delay: 460ms;
   }
 
-  .frame-rise {
+  :global(.frame-rise) {
+    animation: rise 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
     animation-delay: 560ms;
   }
 
@@ -175,8 +177,15 @@ const chars = [...eyebrow];
     }
   }
 
+  @media (max-width: 767px) {
+    .hero {
+      padding-top: var(--space-16);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .rise,
+    :global(.frame-rise),
     .typing > span:not(.caret) {
       animation: none;
       opacity: 1;
