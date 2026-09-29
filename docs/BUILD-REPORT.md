@@ -1,5 +1,48 @@
 # Build report
 
+## Morning summary (overnight run, 30 Sep 2026)
+
+All seven tasks are built and committed on branch `build/overnight` (not merged into `main`). `npm run build` passes with 0 type errors.
+
+| Task | Status | Commit |
+| --- | --- | --- |
+| 01 Scaffold, tokens, header, footer | Done | feat(task01) |
+| 02 Hero, scroll story, route cards | Done | feat(task02) |
+| 03 Firro, Native Nights, Services, Work, Insights | Done | feat(task03) |
+| 04 Process, founder, investor band, contact form | Done — live form delivery not verified (no Web3Forms key yet) | feat(task04) |
+| 05 Responsive + motion | Done — real devices not tested | feat(task05) |
+| 06 SEO, llms.txt, legal pages, 404 | Done | feat(task06) |
+| 07 QA + deploy prep | Done — not deployed (by design) | feat(task07) |
+
+**Lighthouse mobile (local production build):** Home 99 / 100 / 96 / 100, LCP ≈2.2 s, CLS 0. JS shipped: 4.3 KB gzipped (budget 30 KB). Best Practices is 96 only because Vercel Analytics 404s off Vercel.
+
+### How to view it
+
+```bash
+npm install
+npm run dev
+```
+
+Open http://localhost:4321. For the production build: `npm run build && npm run preview` → http://localhost:4321 (or the port it prints).
+
+### Decisions, TODOs, known issues
+
+- **Decisions:** 25 logged in [DECISIONS.md](DECISIONS.md). The ones most worth a look: #9 (loops not on the brand-book list — steam, hex pulse, founder orbit — are drawn still), #13 (the scroll story pins only on screens ≥1025×820), #16/#17 (no Services/Insights index pages, so "All services"/"All insights" are left out and service cards open the contact form), #20 (the form replaces the closing "Start a project" button).
+- **Needs your input:** Web3Forms key → `.env` + Vercel (`PUBLIC_WEB3FORMS_KEY`); in `src/data/company.ts`: `NATIVE_NIGHTS_URL`, `whatsappNumber`, `linkedinUrl`, `gstin`; founder photo → `src/assets/founder.jpg`; confirm the "Now building" statuses, process promises and stack chips; lawyer review of `content/privacy.md` and `content/terms.md` → `draft: false`.
+- **Known issues / not verified:** no live form submission or no-JS POST test; no real Android/iPhone test; social OG preview and Vercel Analytics need the live URL; blog pages pending ([TECH-DEBT.md](TECH-DEBT.md)); `public/llms.txt` must be kept in step with `content/llms.md` by hand.
+
+### First three things to check in the browser
+
+1. **Scroll the "Three things our AI always does" section on a desktop screen** (≥1025 px wide, ≥820 px tall): it should pin while the three statements take turns and the dark Firro card changes label.
+2. **Click "Book a Firro demo" and then "Request investor deck"**: the page should scroll to the form with the matching intent selected and the message placeholder changed, without reloading. Submit it empty to see the inline errors.
+3. **Resize to a phone width (~390 px)**: the hamburger menu, the stacked sections, the hero mock showing only the prep table, and no sideways scrolling.
+
+### Where to resume
+
+Nothing is left mid-task. Next steps are yours: review `build/overnight`, merge it, then follow the deployment steps at the end of Task 07 below.
+
+## Task log
+
 (Written by Claude Code during the build.)
 
 ---
