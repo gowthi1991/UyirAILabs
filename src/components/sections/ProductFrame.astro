@@ -1,0 +1,160 @@
+---
+// Hero product frame: rotating border beam + scan line around the Firro admin mock.
+// Overlaps into the light sheet below (see .sheet in index.astro).
+import FirroAdminMock from '../mockups/FirroAdminMock.astro';
+import LiveDot from '../ui/LiveDot.astro';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<figure class:list={['frame beam', className]}>
+  <div class="bar" aria-hidden="true">
+    <span class="light"></span><span class="light"></span><span class="light"></span>
+    <span class="t-small path">firro · kitchen admin</span>
+    <span class="status t-label"><LiveDot />AI assist · prep plan ready</span>
+  </div>
+  <div class="scan">
+    <FirroAdminMock />
+  </div>
+  <figcaption class="t-small caption">Illustrative data</figcaption>
+</figure>
+
+<style>
+  .frame {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1200px;
+    margin: var(--space-12) 0 calc(var(--hero-overlap) * -1);
+    border-radius: var(--radius-xl);
+    background: var(--surface-200);
+    border: 1px solid var(--line-strong);
+    overflow: hidden;
+    isolation: isolate;
+    text-align: left;
+  }
+
+  /* Rotating border beam (allowed loop): a conic sweep behind an inset panel. */
+  .beam::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: -2;
+    width: 140%;
+    aspect-ratio: 1;
+    background: conic-gradient(from 0deg, transparent 0deg, transparent 280deg, var(--pulse) 340deg, transparent 360deg);
+    transform: translate(-50%, -50%) rotate(0deg);
+    animation: beam 6s linear infinite;
+  }
+
+  .beam::after {
+    content: '';
+    position: absolute;
+    inset: 1.5px;
+    z-index: -1;
+    border-radius: calc(var(--radius-xl) - 2px);
+    background: var(--surface-200);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: 44px;
+    padding: 0 var(--space-4);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .light {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-pill);
+    background: var(--line);
+  }
+
+  .path {
+    margin-left: var(--space-3);
+    color: var(--ink-muted);
+    font-family: var(--font-mono);
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-left: auto;
+  }
+
+  .scan {
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-6) var(--space-6) var(--space-3);
+  }
+
+  /* Scan line (allowed loop). */
+  .scan::after {
+    content: '';
+    position: absolute;
+    left: var(--space-6);
+    right: var(--space-6);
+    top: 0;
+    height: 64px;
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      color-mix(in srgb, var(--pulse) 10%, transparent) 80%,
+      color-mix(in srgb, var(--pulse) 45%, transparent) 100%
+    );
+    border-bottom: 1px solid color-mix(in srgb, var(--pulse) 60%, transparent);
+    animation: scan 4.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    pointer-events: none;
+  }
+
+  .caption {
+    padding: 0 var(--space-6) var(--space-4);
+    color: var(--ink-muted);
+    text-align: right;
+  }
+
+  @keyframes beam {
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  @keyframes scan {
+    0% {
+      transform: translateY(-10%);
+    }
+    100% {
+      transform: translateY(520px);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .path {
+      display: none;
+    }
+    .scan {
+      padding: var(--space-3) var(--space-3) var(--space-2);
+    }
+    .scan::after {
+      display: none;
+    }
+    .caption {
+      padding: 0 var(--space-3) var(--space-3);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .beam::before,
+    .scan::after {
+      display: none;
+    }
+  }
+</style>

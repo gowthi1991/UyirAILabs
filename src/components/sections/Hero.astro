@@ -1,0 +1,193 @@
+---
+import Button from '../ui/Button.astro';
+import LiveDot from '../ui/LiveDot.astro';
+import CircuitTraces from '../mockups/CircuitTraces.astro';
+import ProductFrame from './ProductFrame.astro';
+
+const eyebrow = 'AI-native software studio · Coimbatore';
+const chars = [...eyebrow];
+---
+
+<section id="top" class="hero dots" data-loop>
+  <CircuitTraces />
+  <div class="container inner">
+    <p class="eyebrow rise t-label">
+      <LiveDot />
+      <span class="visually-hidden">{eyebrow}</span>
+      <span class="typing" aria-hidden="true">
+        {chars.map((c, i) => <span style={`--i:${i}`}>{c}</span>)}<span class="caret"></span>
+      </span>
+    </p>
+
+    <h1 class="title t-display-hero">
+      <span class="line line-1 rise">Every business runs</span>
+      <span class="line line-2 rise">on a daily rhythm.</span>
+      <span class="line line-3 rise"><span class="sweep">We make it intelligent.</span></span>
+    </h1>
+
+    <p class="sub t-body-lg rise">
+      Orders, schedules, stock and people: we turn the everyday rhythm of a business into software that learns and
+      helps. Our first product, Firro, does it for subscription kitchens.
+    </p>
+
+    <div class="ctas rise">
+      <Button href="/?intent=project#contact" intent="project" arrow glow>Start a project</Button>
+      <Button href="/#firro" variant="text" arrow>See Firro</Button>
+    </div>
+
+    <ProductFrame class="rise frame-rise" />
+  </div>
+</section>
+
+<style>
+  /* Entrance: first, so per-element delays below override the shorthand. */
+  .rise {
+    animation: rise 800ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .hero {
+    position: relative;
+    z-index: 2;
+    isolation: isolate;
+    padding-top: var(--space-30);
+    background-color: var(--surface-100);
+    text-align: center;
+  }
+
+  .inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--ink);
+  }
+
+  .typing {
+    display: inline-flex;
+    white-space: pre;
+  }
+
+  .typing > span:not(.caret) {
+    opacity: 0;
+    animation: type-in 1ms linear forwards;
+    animation-delay: calc(300ms + var(--i) * 47ms);
+  }
+
+  .caret {
+    display: inline-block;
+    width: 2px;
+    height: var(--lh-label);
+    margin-left: var(--space-1);
+    background: var(--pulse);
+    animation: caret 0.9s step-end 6;
+    opacity: 0;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .line {
+    display: block;
+  }
+  .line-1 {
+    color: var(--line-strong);
+    animation-delay: 80ms;
+  }
+  .line-2 {
+    color: var(--ink-muted);
+    animation-delay: 180ms;
+  }
+  .line-3 {
+    color: var(--ink);
+    animation-delay: 280ms;
+  }
+
+  /* Headline highlight sweep (allowed loop). */
+  .sweep {
+    display: inline-block;
+    background: linear-gradient(100deg, var(--ink) 0%, var(--ink) 40%, var(--pulse) 50%, var(--ink) 60%, var(--ink) 100%);
+    background-size: 250% 100%;
+    background-position: 120% 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: sweep 6s ease-in-out 1.2s infinite;
+  }
+
+  .sub {
+    max-width: 640px;
+    color: var(--ink-muted);
+    animation-delay: 380ms;
+  }
+
+  .ctas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-6);
+    animation-delay: 460ms;
+  }
+
+  .frame-rise {
+    animation-delay: 560ms;
+  }
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes type-in {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes caret {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  @keyframes sweep {
+    0% {
+      background-position: 120% 0;
+    }
+    60%,
+    100% {
+      background-position: -20% 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rise,
+    .typing > span:not(.caret) {
+      animation: none;
+      opacity: 1;
+    }
+    .caret {
+      display: none;
+    }
+    .sweep {
+      animation: none;
+      background: none;
+      color: var(--ink);
+    }
+  }
+</style>

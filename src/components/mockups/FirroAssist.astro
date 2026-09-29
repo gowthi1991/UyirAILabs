@@ -1,0 +1,81 @@
+---
+// Right-hand "AI assist" column of the Firro admin mock. Part of a decorative image.
+const suggestions = [
+  { text: '18 subscribers paused tomorrow. Reduce idli batter by 6 kg?', action: 'Apply' },
+  { text: 'Chapati count matches plan. Approve the rest of lunch prep?', action: 'Approve' },
+  { text: 'Route 3 has 2 new stops. Reorder for a 12:40 finish?', action: 'Reorder' },
+];
+---
+
+<div class="assist">
+  <div class="t-label title"><span class="dot"></span>AI assist</div>
+  {
+    suggestions.map((s) => (
+      <div class="card">
+        <div class="t-small">{s.text}</div>
+        <div class="actions">
+          <span class="act act--go t-label">{s.action}</span>
+          <span class="act t-label">Dismiss</span>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .assist {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-6) var(--space-4);
+    border-left: 1px solid var(--line);
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background: var(--pulse);
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+  }
+
+  .actions {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  .act {
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-transform: none;
+  }
+
+  .act--go {
+    background: var(--pulse);
+    border-color: var(--pulse);
+    color: var(--on-pulse);
+  }
+
+  @media (max-width: 767px) {
+    .assist {
+      display: none;
+    }
+  }
+</style>

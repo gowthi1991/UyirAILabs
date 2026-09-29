@@ -1,0 +1,138 @@
+---
+// Stacked tiffin carriers with steam, on a light dot grid. Node blinks are an allowed loop;
+// the steam is drawn still (steam is not in the brand book's loop list).
+const hexes = [
+  'M60 56 L72 63 V77 L60 84 L48 77 V63 Z',
+  'M84 70 L96 77 V91 L84 98 L72 91 V77 Z',
+  'M60 84 L72 91 V105 L60 112 L48 105 V91 Z',
+  'M400 346 L412 353 V367 L400 374 L388 367 V353 Z',
+  'M376 360 L388 367 V381 L376 388 L364 381 V367 Z',
+  'M400 374 L412 381 V395 L400 402 L388 395 V381 Z',
+];
+const carriers = [
+  { x: 115, top: 210, tiers: 4, soft: 1, handle: 'M133 210 Q160 176 187 210', rails: 'M109 218 V378 M211 218 V378' },
+  { x: 255, top: 236, tiers: 3, soft: 0, handle: 'M273 236 Q300 202 327 236', rails: 'M249 244 V360 M351 244 V360' },
+];
+const steam = [
+  'M150 170 c-10 -14 10 -22 0 -36 c-10 -14 10 -22 0 -36',
+  'M172 176 c-10 -14 10 -22 0 -36 c-10 -14 10 -22 0 -36',
+  'M290 200 c-10 -14 10 -22 0 -36 c-10 -14 10 -22 0 -36',
+  'M312 206 c-10 -14 10 -22 0 -36 c-10 -14 10 -22 0 -36',
+];
+const nodes = [
+  { cx: 84, cy: 84, delay: 0 },
+  { cx: 376, cy: 374, delay: 1 },
+  { cx: 230, cy: 392, delay: 2 },
+];
+---
+
+<div class="illo theme-light dots">
+  <svg viewBox="0 0 460 440" role="img" aria-label="Illustration: stacked tiffin carriers with steam">
+    {hexes.map((d) => <path class="hex" d={d} />)}
+    <path class="ground" d="M40 392 H420" />
+    <path class="shelf" d="M80 392 V340 H200 M260 392 V330 H380" />
+    {
+      carriers.map((c) => (
+        <g>
+          <path class="stroke" d={c.handle} />
+          {Array.from({ length: c.tiers }, (_, i) => (
+            <g>
+              <rect class:list={['tier', { soft: i === c.soft }]} x={c.x} y={c.top + i * 44} width="90" height="40" rx="10" />
+              <path class="seam" d={`M${c.x + 10} ${c.top + i * 44 + 12} H${c.x + 80}`} />
+            </g>
+          ))}
+          <path class="stroke" d={c.rails} />
+        </g>
+      ))
+    }
+    {steam.map((d) => <path class="steam" d={d} />)}
+    <path class="wire" d="M230 392 V300 H300" />
+    {
+      nodes.map((n) => (
+        <g style={`--delay:${n.delay}s`}>
+          <circle class="node-halo" cx={n.cx} cy={n.cy} r="5" />
+          <circle class="node" cx={n.cx} cy={n.cy} r="5" />
+        </g>
+      ))
+    }
+  </svg>
+</div>
+
+<style>
+  .illo {
+    width: 100%;
+    max-width: 460px;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--line);
+    background-color: var(--surface-200);
+    overflow: hidden;
+  }
+  svg {
+    width: 100%;
+    height: auto;
+  }
+  .hex {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1.5;
+  }
+  .ground,
+  .stroke {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 3;
+    stroke-linecap: round;
+  }
+  .shelf,
+  .seam {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 2;
+  }
+  .tier {
+    fill: var(--surface-200);
+    stroke: var(--ink);
+    stroke-width: 3;
+  }
+  .tier.soft {
+    fill: var(--pulse-soft);
+  }
+  .steam {
+    fill: none;
+    stroke: var(--line-strong);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+  }
+  .wire {
+    fill: none;
+    stroke: var(--pulse);
+    stroke-width: 2;
+    stroke-dasharray: 4 6;
+  }
+  .node,
+  .node-halo {
+    fill: var(--pulse);
+  }
+  .node-halo {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: halo 2.4s ease-out var(--delay) infinite;
+  }
+  @keyframes halo {
+    0% {
+      transform: scale(1);
+      opacity: 0.55;
+    }
+    70%,
+    100% {
+      transform: scale(2.2);
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .node-halo {
+      display: none;
+    }
+  }
+</style>

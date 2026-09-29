@@ -1,0 +1,182 @@
+---
+// Firro Kitchen Admin mock (illustrative data), rebuilt as HTML/CSS. Decorative image.
+import FirroAssist from './FirroAssist.astro';
+const nav = ['Today', 'Subscriptions', 'Menu planner', 'Prep & kitchen', 'Dispatch', 'Reports'];
+const kpis = [
+  { label: 'Active plans', value: '312' },
+  { label: 'Paused tomorrow', value: '18', warn: true },
+  { label: 'Meals to cook', value: '294' },
+  { label: 'Routes', value: '6' },
+];
+const rows = [
+  { item: 'Idli batter', qty: '42 kg', batches: 3, ai: true },
+  { item: 'Sambar', qty: '36 L', batches: 2, ai: true },
+  { item: 'Lemon rice', qty: '28 kg', batches: 2, ai: true },
+  { item: 'Chapati', qty: '520 pcs', batches: 4, ai: false },
+  { item: 'Mixed veg kootu', qty: '24 kg', batches: 2, ai: false },
+];
+---
+
+<div
+  class="mock"
+  role="img"
+  aria-label="Firro kitchen admin showing today's lunch prep: 312 active plans, 18 paused tomorrow, an AI-drafted prep list and three AI suggestions awaiting approval."
+>
+  <div class="side">
+    <div class="brand t-title">firro</div>
+    {nav.map((n, i) => <div class:list={['nav t-small', { active: i === 0 }]}>{i === 0 && <span class="nav-dot" />}{n}</div>)}
+  </div>
+
+  <div class="main">
+    <div class="head">
+      <div class="t-title">Today’s prep</div>
+      <div class="t-small muted">Tue, 30 Sep · Lunch</div>
+    </div>
+    <div class="kpis">
+      {
+        kpis.map((k) => (
+          <div class="kpi">
+            <div class="t-label">{k.label}</div>
+            <div class:list={['t-heading', { warn: k.warn }]}>{k.value}</div>
+          </div>
+        ))
+      }
+    </div>
+    <div class="table">
+      <div class="tr th t-label"><span>Item</span><span>Qty</span><span>Batches</span><span>Status</span></div>
+      {
+        rows.map((r) => (
+          <div class="tr t-small">
+            <span>{r.item}</span>
+            <span class="muted">{r.qty}</span>
+            <span class="muted">{r.batches}</span>
+            <span><span class:list={['tag t-label', { ai: r.ai }]}>{r.ai ? 'AI draft' : 'Approved'}</span></span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <FirroAssist />
+</div>
+
+<style>
+  .mock {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr) 300px;
+    height: 460px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--surface-100);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-align: left;
+  }
+  .muted {
+    color: var(--ink-muted);
+  }
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-4) var(--space-3);
+    border-right: 1px solid var(--line);
+  }
+  .brand {
+    padding: var(--space-1) var(--space-3) var(--space-4);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    height: 36px;
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-md);
+    color: var(--ink-muted);
+  }
+  .nav.active {
+    background: var(--surface-300);
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .nav-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: var(--radius-pill);
+    background: var(--pulse);
+  }
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    min-width: 0;
+  }
+  .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+  .kpi {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+  }
+  .warn {
+    color: var(--amber);
+  }
+  .table {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    background: var(--surface-200);
+  }
+  .tr {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1.2fr;
+    align-items: center;
+    height: 40px;
+    padding: 0 var(--space-3);
+    border-top: 1px solid var(--line);
+  }
+  .th {
+    height: 32px;
+    border-top: 0;
+  }
+  .tag {
+    display: inline-flex;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--surface-300);
+    text-transform: none;
+    letter-spacing: normal;
+  }
+  .tag.ai {
+    background: var(--pulse-soft);
+    color: var(--pulse-text);
+  }
+  @media (max-width: 767px) {
+    .mock {
+      grid-template-columns: minmax(0, 1fr);
+      height: auto;
+    }
+    .side {
+      display: none;
+    }
+    .main {
+      padding: var(--space-4);
+    }
+    .kpis {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

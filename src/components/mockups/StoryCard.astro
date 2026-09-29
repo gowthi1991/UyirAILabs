@@ -1,0 +1,159 @@
+---
+// Dark Firro card in the story section; its label and status follow the active step.
+import LiveDot from '../ui/LiveDot.astro';
+
+interface Props {
+  label: string;
+  state: string;
+}
+
+const { label, state } = Astro.props;
+const modules = [
+  { name: 'POS', ai: false },
+  { name: 'ADMIN', ai: false },
+  { name: 'AI', ai: true },
+];
+---
+
+<div class="card theme-dark">
+  <div class="who">
+    <div class="mark"><img src="/brand/uyir-mark-dark.svg" alt="" width="28" height="32" loading="lazy" /></div>
+    <div>
+      <p class="name">Your kitchen</p>
+      <p class="t-small sub">Subscription kitchen on Firro</p>
+    </div>
+  </div>
+  <div class="rule"></div>
+  <div class="status" aria-live="polite">
+    <span class="t-label" data-story-label>{label}</span>
+    <span class="state t-label"><LiveDot /><span data-story-state>{state}</span></span>
+  </div>
+  <div class="tiles" aria-hidden="true">
+    <div class="tile"><span class="bar sk w70"></span><span class="bar w45"></span></div>
+    <div class="tile"><span class="bar sk w60"></span><span class="bar w50"></span></div>
+  </div>
+  <p class="t-label">Modules</p>
+  <ul class="modules" role="list">
+    {
+      modules.map((m) => (
+        <li class:list={['hex', { ai: m.ai }]}>
+          <span class="hex-inner t-label">{m.name}</span>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-raised);
+  }
+  .who {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--surface-300);
+  }
+  .name {
+    font-weight: 700;
+  }
+  .sub {
+    color: var(--ink-muted);
+  }
+  .rule {
+    height: 1px;
+    background: var(--line);
+  }
+  .status {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+  .state {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-transform: none;
+  }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    height: 72px;
+    padding: var(--space-3);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--line);
+    background: var(--surface-300);
+  }
+  .bar {
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background: var(--line);
+  }
+  /* Skeleton shimmer (allowed loop). */
+  .sk {
+    background: linear-gradient(90deg, var(--line) 0%, var(--line-strong) 50%, var(--line) 100%);
+    background-size: 200% 100%;
+    animation: sk 1.8s linear infinite;
+  }
+  .w70 { width: 70%; }
+  .w45 { width: 45%; }
+  .w60 { width: 60%; }
+  .w50 { width: 50%; }
+  .modules {
+    display: flex;
+    gap: var(--space-4);
+    margin: 0;
+  }
+  .hex,
+  .hex-inner {
+    clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  }
+  .hex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 84px;
+    height: 92px;
+    background: var(--line);
+  }
+  .hex.ai {
+    background: var(--pulse);
+  }
+  .hex-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 88px;
+    background: var(--surface-300);
+  }
+  @keyframes sk {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sk { animation: none; }
+  }
+</style>

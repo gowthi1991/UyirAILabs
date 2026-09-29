@@ -1,7 +1,32 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import StoryCycle from '../components/sections/StoryCycle.astro';
+import RouteCards from '../components/sections/RouteCards.astro';
 ---
 
 <BaseLayout canonicalPath="/">
-  <h1 class="visually-hidden">Uyir AI Labs</h1>
+  <Hero />
+
+  <!-- Light sheet: rises over the dark hero with radius-2xl top corners. -->
+  <div class="sheet theme-light">
+    <StoryCycle />
+    <RouteCards />
+  </div>
 </BaseLayout>
+
+<style>
+  .sheet {
+    position: relative;
+    z-index: 1;
+    padding-top: var(--hero-overlap);
+    border-radius: var(--radius-2xl) var(--radius-2xl) 0 0;
+    background-color: var(--surface-100);
+  }
+
+  @media (max-width: 767px) {
+    .sheet {
+      border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    }
+  }
+</style>

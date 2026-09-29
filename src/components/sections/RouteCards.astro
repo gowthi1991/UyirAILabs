@@ -1,0 +1,112 @@
+---
+// Three routes into the site: services, products, investors.
+import Icon from '../ui/Icon.astro';
+
+const routes = [
+  {
+    href: '/#services',
+    icon: 'code',
+    title: 'Build with us',
+    body: 'Put AI to work in your business: assistants, automation, apps and platforms, built by a team that runs AI in its own product.',
+    cta: 'Explore services',
+  },
+  {
+    href: '/#firro',
+    icon: 'hex-node',
+    title: 'Our products',
+    body: 'Firro, the AI-native Kitchen OS for subscription kitchens, and Native Nights, weekly hosted hangouts for Tamil speakers abroad.',
+    cta: 'See our products',
+  },
+  {
+    href: '/#investors',
+    icon: 'chart',
+    title: 'For investors',
+    body: 'Why AI belongs in India’s subscription kitchens, what we have built, and where we are going next.',
+    cta: 'Investor overview',
+  },
+] as const;
+---
+
+<section class="routes" aria-label="Where to start">
+  <div class="container grid">
+    {
+      routes.map((r) => (
+        <a href={r.href} class="card" data-reveal>
+          <span class="icon">
+            <Icon name={r.icon} />
+          </span>
+          <h3 class="t-title">{r.title}</h3>
+          <p class="t-body body">{r.body}</p>
+          <span class="cta t-button">
+            {r.cta}
+            <Icon name="arrow-right" size={18} stroke={2} />
+          </span>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .routes {
+    padding-bottom: var(--section-pad);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-8);
+    border-radius: var(--radius-lg);
+    background: var(--surface-200);
+    border: 1px solid var(--line);
+    color: var(--ink);
+    text-decoration: none;
+    transition:
+      transform 250ms ease,
+      box-shadow 250ms ease,
+      border-color 250ms ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--pulse-text);
+    box-shadow: var(--shadow-raised);
+  }
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--pulse-soft);
+    color: var(--ink);
+  }
+  .body {
+    flex-grow: 1;
+    color: var(--ink-muted);
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--pulse-text);
+  }
+  @media (max-width: 767px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .card {
+      padding: var(--space-6);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card:hover {
+      transform: none;
+    }
+  }
+</style>

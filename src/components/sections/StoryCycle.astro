@@ -1,0 +1,166 @@
+---
+// "Three things our AI always does." Desktop: sticky inside a tall wrapper, the active step
+// follows scroll. Short screens, mobile, reduced motion: static, step 1 active, click to switch.
+import SectionHeading from '../ui/SectionHeading.astro';
+import KitchenIllustration from '../mockups/KitchenIllustration.astro';
+import StoryCard from '../mockups/StoryCard.astro';
+
+const steps = [
+  { lead: 'Sees', rest: 'the whole day.', sub: 'Orders, subscriptions and stock in one live view.', card: 'Today at a glance', state: 'live' },
+  { lead: 'Takes', rest: 'the first pass.', sub: 'Prep lists, reminders and reports arrive already drafted.', card: 'First pass ready', state: 'awaiting review' },
+  { lead: 'Waits', rest: 'for your yes.', sub: 'Nothing important changes until a person approves it.', card: 'Approved by you', state: 'approved' },
+];
+---
+
+<div class="story" data-story data-steps={JSON.stringify(steps.map((s) => ({ card: s.card, state: s.state })))}>
+  <section class="pin section" aria-labelledby="story-title" data-loop>
+    <div class="container inner">
+      <SectionHeading lead="Three things" rest="our AI always does." align="center" id="story-title" />
+      <div class="grid">
+        <div class="steps">
+          {
+            steps.map((s, i) => (
+              <button type="button" class="step" aria-pressed={i === 0 ? 'true' : 'false'} data-step={i}>
+                <span class="step-title t-heading">
+                  <span class="step-lead">{s.lead}</span> {s.rest}
+                </span>
+                <span class="step-sub t-body">{s.sub}</span>
+              </button>
+            ))
+          }
+        </div>
+        <div class="visual">
+          <KitchenIllustration />
+          <div class="float">
+            <StoryCard label={steps[0].card} state={steps[0].state} />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+  import { initStory } from '../../scripts/story-cycle';
+  initStory();
+</script>
+
+<style>
+  .inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-16);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 420px minmax(0, 1fr);
+    gap: var(--space-16);
+    align-items: center;
+  }
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+  .step {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: calc(var(--space-2) * -1);
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+  }
+  .step:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .step-title,
+  .step-lead {
+    color: var(--ink-muted);
+    transition: color 400ms ease;
+  }
+  .step[aria-pressed='true'] .step-title {
+    color: var(--ink);
+  }
+  .step[aria-pressed='true'] .step-lead {
+    color: var(--pulse-text);
+  }
+  .step-sub {
+    color: var(--ink-muted);
+  }
+  .visual {
+    position: relative;
+    min-height: 520px;
+  }
+  .float {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 380px;
+    animation:
+      card-in 900ms cubic-bezier(0.2, 0.7, 0.2, 1) 300ms both,
+      floaty 6s ease-in-out 1.2s infinite;
+  }
+
+  /* Sticky scroll story: wide, tall enough screens with motion allowed. */
+  @media (min-width: 1025px) and (min-height: 820px) and (prefers-reduced-motion: no-preference) {
+    :global(html.js) .story {
+      height: 300vh;
+    }
+    :global(html.js) .pin {
+      position: sticky;
+      top: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-block: var(--space-16);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-12);
+    }
+    .visual {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 0;
+    }
+    .float {
+      position: relative;
+      align-self: flex-end;
+      width: min(380px, calc(100% - var(--space-6)));
+      margin-top: calc(var(--space-24) * -1);
+      animation: none;
+    }
+  }
+
+  @keyframes card-in {
+    from {
+      opacity: 0;
+      transform: translateY(32px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes floaty {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .float {
+      animation: none;
+    }
+  }
+</style>

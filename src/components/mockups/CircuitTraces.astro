@@ -1,0 +1,110 @@
+---
+// Hero background: circuit traces with travelling data pulses and blinking end nodes.
+// Decorative only. Loops: "circuit data pulses and node blinks" (brand book, Motion).
+const traces = [
+  { d: 'M0 150 H70 L110 190 V360 L150 400 H230', dur: 3.2, delay: 0, end: [230, 400] },
+  { d: 'M1440 150 H1370 L1330 190 V360 L1290 400 H1210', dur: 3.9, delay: 0.4, end: [1210, 400] },
+  { d: 'M0 260 H40 L70 290 V520 L110 560 H200', dur: 4.1, delay: 1.1, end: [200, 560] },
+  { d: 'M1440 260 H1400 L1370 290 V520 L1330 560 H1240', dur: 4.8, delay: 1.5, end: [1240, 560] },
+  { d: 'M60 0 V60 L100 100 H180 L220 140 V250', dur: 3.6, delay: 2.0, end: [220, 250] },
+  { d: 'M1380 0 V60 L1340 100 H1260 L1220 140 V250', dur: 4.3, delay: 2.4, end: [1220, 250] },
+  { d: 'M0 640 H90 L130 600 V470 L170 430', dur: 4.6, delay: 0.6, end: [170, 430] },
+  { d: 'M1440 640 H1350 L1310 600 V470 L1270 430', dur: 5.3, delay: 1.0, end: [1270, 430] },
+  { d: 'M150 700 V620 L190 580 H240', dur: 3.0, delay: 1.7, end: [240, 580] },
+  { d: 'M1290 700 V620 L1250 580 H1200', dur: 3.7, delay: 2.1, end: [1200, 580] },
+];
+---
+
+<svg class="traces" width="1440" height="760" viewBox="0 0 1440 760" aria-hidden="true" focusable="false">
+  {traces.map((t) => <path class="trace" d={t.d} />)}
+  {
+    traces.map((t) => (
+      <path class="packet" d={t.d} style={`animation-duration:${t.dur}s;animation-delay:${t.delay}s`} />
+    ))
+  }
+  {
+    traces.map((t) => (
+      <g style={`--dur:${t.dur}s;--delay:${(t.delay + t.dur * 0.9).toFixed(1)}s`}>
+        <circle class="node" cx={t.end[0]} cy={t.end[1]} r="4" />
+        <circle class="node-lit" cx={t.end[0]} cy={t.end[1]} r="4" />
+      </g>
+    ))
+  }
+</svg>
+
+<style>
+  .traces {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    z-index: -1;
+    max-width: none;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+
+  .trace,
+  .packet {
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+  }
+
+  .trace {
+    stroke: var(--line);
+  }
+
+  .packet {
+    stroke: var(--pulse);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 28 1012;
+    stroke-dashoffset: 1040;
+    animation: flow 3.6s linear infinite;
+  }
+
+  .node {
+    fill: var(--surface-100);
+    stroke: var(--line-strong);
+    stroke-width: 1.5;
+  }
+
+  .node-lit {
+    fill: var(--pulse);
+    opacity: 0;
+    animation: blink var(--dur) ease-in-out var(--delay) infinite;
+  }
+
+  @keyframes flow {
+    from {
+      stroke-dashoffset: 1040;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes blink {
+    0%,
+    70%,
+    100% {
+      opacity: 0;
+    }
+    80% {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .packet,
+    .node-lit {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .traces {
+      display: none;
+    }
+  }
+</style>

@@ -68,8 +68,7 @@ textarea {
 }
 
 /* Themes: a themed wrapper re-resolves its own ground and text. */
-.theme-light,
-.theme-dark {
+:where(.theme-light, .theme-dark) {
   background-color: var(--surface-100);
   color: var(--ink);
 }
@@ -87,6 +86,8 @@ textarea {
 :root {
   --gutter: var(--space-30);
   --section-pad: var(--space-24);
+  /* Hero frame overlap into the light sheet (Task 02/05 spec). */
+  --hero-overlap: 280px;
 }
 
 .container {
@@ -162,6 +163,7 @@ textarea {
   :root {
     --gutter: var(--space-6);
     --section-pad: var(--space-16);
+    --hero-overlap: var(--space-30);
   }
 }
 
