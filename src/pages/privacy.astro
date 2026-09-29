@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalPage from '../components/sections/LegalPage.astro';
+import { frontmatter, Content } from '../../content/privacy.md';
+---
+
+<BaseLayout title="Privacy Policy — Uyir AI Labs" description="How Uyir AI Labs handles personal data on uyirailabs.com, under India’s Digital Personal Data Protection Act, 2023." canonicalPath="/privacy/">
+  <LegalPage title={frontmatter.title} draft={frontmatter.draft === true} lastUpdated={frontmatter.lastUpdated} Content={Content} />
+</BaseLayout>

@@ -1,0 +1,22 @@
+# Uyir AI Labs
+
+> Uyir AI Labs Private Limited is an AI-native software company in Coimbatore, Tamil Nadu, India (DPIIT-recognised startup, Udyam-registered MSME). It builds its own products and custom software for businesses that run on daily operations.
+
+## Products
+- Firro: an AI-native Kitchen OS for subscription and tiffin kitchens — POS, kitchen admin, customer app and delivery app on one system; AI drafts tomorrow's prep from today's subscriptions and people approve it. Status: pilot in Coimbatore.
+- Native Nights: a live social space where Tamil-speaking people living abroad meet through small, hosted weekly rooms (4–10 people). Web app live.
+
+## Services
+- AI and automation (assistants, agents, workflow automation)
+- Web and mobile apps (Flutter, React, PWA)
+- SaaS product engineering (multi-tenant, RBAC, offline-first)
+- UI/UX and design systems
+
+## Contact
+- Website: https://uyirailabs.com
+- Email: hello@uyirailabs.com
+- Location: Vadavalli, Coimbatore, Tamil Nadu 641041, India
+
+## More
+- Privacy Policy: https://uyirailabs.com/privacy/
+- Terms of Use: https://uyirailabs.com/terms/

@@ -4,6 +4,9 @@ Decisions taken during builds. Newest first.
 
 | # | Task | Decision | Options considered | Why |
 | --- | --- | --- | --- | --- |
+| 25 | 06 | Internal URLs for sub-pages end with `/` (`/privacy/`, `/terms/`, `/thanks/`) | No trailing slash | Matches Astro's directory output and the sitemap, so canonical, sitemap and served URL agree. |
+| 24 | 06 | `public/llms.txt` is a copy of `content/llms.md` plus links to the legal pages | Generate it at build time | One small file; a build step adds moving parts. Update both together (noted in the report). |
+| 23 | 06 | OG image rendered once with local Chrome and committed (`scripts/build-og.mjs`) | Generate on every build | Vercel's build image has no Chrome, and a new dependency (e.g. satori/sharp) is outside the fixed stack. |
 | 22 | 04 | Success panel says only "Thanks, {name}. We'll reply within one business day." | Also promise a copy to the sender | Web3Forms emails us, not the sender; don't claim what the system doesn't do. |
 | 21 | 04 | Browser validation is turned off by JS (`form.noValidate = true`), not in markup | `novalidate` in HTML | Without JS the browser's native `required` checks still protect the plain POST. |
 | 20 | 04 | The reference's closing "Start a project" button is replaced by the form; "Chat on WhatsApp" stays (hidden while no number) | Keep both buttons above the form | The button would just scroll to the form directly below it. |

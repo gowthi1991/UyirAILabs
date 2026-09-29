@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+import Label from '../components/ui/Label.astro';
+---
+
+<BaseLayout title="Page not found — Uyir AI Labs" description="This page does not exist on uyirailabs.com." noindex>
+  <section class="nf section dots">
+    <div class="container inner">
+      <Label dot>404 · Not found</Label>
+      <h1 class="t-display-xl">This page took a day off.</h1>
+      <p class="t-body-lg sub">The link may be old or mistyped. These will get you back on track:</p>
+      <nav class="links" aria-label="Helpful links">
+        <Button href="/">Home</Button>
+        <Button href="/#services" variant="secondary">Services</Button>
+        <Button href="/#firro" variant="secondary">Firro</Button>
+        <Button href="/#contact" variant="secondary">Contact</Button>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .nf {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+  }
+  .inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+  }
+  .sub {
+    max-width: 560px;
+    color: var(--ink-muted);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+</style>

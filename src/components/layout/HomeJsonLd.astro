@@ -1,0 +1,58 @@
+---
+// Structured data for Home: Organization, the two products, WebSite. Facts from company.ts.
+import { company, NATIVE_NIGHTS_URL } from '../../data/company';
+
+const url = company.siteUrl;
+const org = {
+  '@type': 'Organization',
+  '@id': `${url}/#organization`,
+  name: company.shortName,
+  legalName: company.legalName,
+  url,
+  logo: `${url}/brand/uyir-app-icon.svg`,
+  email: company.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: company.address.street,
+    addressLocality: company.address.locality,
+    addressRegion: company.address.region,
+    postalCode: company.address.postalCode,
+    addressCountry: company.address.country,
+  },
+  founder: { '@type': 'Person', name: company.founder.name, jobTitle: company.founder.role },
+  ...(company.linkedinUrl ? { sameAs: [company.linkedinUrl] } : {}),
+};
+
+const brand = { '@id': `${url}/#organization` };
+const graph = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    org,
+    {
+      '@type': 'WebSite',
+      '@id': `${url}/#website`,
+      url,
+      name: company.shortName,
+      publisher: brand,
+    },
+    {
+      '@type': 'Product',
+      name: 'Firro',
+      description:
+        'AI-native Kitchen OS for subscription and tiffin kitchens: POS, kitchen admin, customer app and delivery app on one system. AI drafts tomorrow’s prep from today’s subscriptions and people approve it.',
+      brand,
+      url: `${url}/#firro`,
+    },
+    {
+      '@type': 'Product',
+      name: 'Native Nights',
+      description:
+        'A live social space where Tamil-speaking people living abroad meet in small, hosted weekly rooms of 4–10 people.',
+      brand,
+      url: NATIVE_NIGHTS_URL || `${url}/#native-nights`,
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(graph)} />

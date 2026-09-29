@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalPage from '../components/sections/LegalPage.astro';
+import { frontmatter, Content } from '../../content/terms.md';
+---
+
+<BaseLayout title="Terms of Use — Uyir AI Labs" description="Terms for using uyirailabs.com, operated by Uyir AI Labs Private Limited." canonicalPath="/terms/">
+  <LegalPage title={frontmatter.title} draft={frontmatter.draft === true} lastUpdated={frontmatter.lastUpdated} Content={Content} />
+</BaseLayout>

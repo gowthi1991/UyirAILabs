@@ -90,3 +90,21 @@
 **Measured (production build, `astro preview`, Lighthouse 12 mobile, local machine):** Performance 99 · Accessibility 100 · Best Practices 100 · SEO 100; LCP 2.0–2.2 s, CLS 0, TBT 0 ms. JS shipped on Home: 2.6 KB gzipped (inline module scripts). No horizontal scroll at 360, 390, 768, 1024, 1280, 1440.
 
 **Could not verify:** real Android/iPhone devices and real 4G; Lighthouse on the deployed Vercel URL.
+
+## Task 06 — plan
+
+- Meta: default title "Uyir AI Labs — AI-native software for real-world operations", description = hero subline, canonical, Open Graph + Twitter `summary_large_image` (already in `BaseLayout`).
+- OG image: `scripts/og/og.html` (dark lockup on `surface-100`, dot grid, headline) rendered to `public/og.png` (1200×630) by `scripts/build-og.mjs` with local headless Chrome. Run manually: `node scripts/build-og.mjs`, then commit the PNG.
+- `layout/HomeJsonLd.astro`: `@graph` with `Organization` (name, legalName, url, logo, email, PostalAddress, founder; `sameAs` only when LinkedIn is set), `WebSite`, `Product` ×2 (Firro, Native Nights; `brand` → the Organization).
+- `@astrojs/sitemap` (site `https://uyirailabs.com`, `/thanks` excluded); `public/robots.txt` allowing all incl. GPTBot, ClaudeBot, PerplexityBot, Google-Extended + sitemap; `public/llms.txt` from `content/llms.md` (+ links to the legal pages).
+- `sections/LegalPage.astro` + `pages/privacy.astro`, `pages/terms.astro`: Markdown imported from `content/*.md`, light 720px column, "Last updated", draft banner when `draft: true`, company facts block from `company.ts`.
+- `pages/404.astro`: dark, short message, links to Home, Services, Firro, Contact.
+- Vercel Web Analytics via `@vercel/analytics/astro` in the layout.
+
+## Task 06 — result
+
+**Built:** all of the above; build passes. Checked: sitemap lists `/`, `/privacy/`, `/terms/`; canonicals match the sitemap (trailing slash); JSON-LD present on Home; Privacy renders with the draft banner; 404 renders.
+
+**Could not verify:** Rich Results / schema validator on the live URL; OG preview in WhatsApp/LinkedIn (needs the public URL); Vercel Analytics collecting (only works on Vercel — locally its script request 404s).
+
+**TODOs:** lawyer review of Privacy and Terms → set `draft: false` in `content/*.md`; LinkedIn URL (adds `sameAs`).

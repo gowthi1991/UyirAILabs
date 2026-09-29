@@ -12,9 +12,11 @@ import Process from '../components/sections/Process.astro';
 import Founder from '../components/sections/Founder.astro';
 import InvestorBand from '../components/sections/InvestorBand.astro';
 import ContactCTA from '../components/sections/ContactCTA.astro';
+import HomeJsonLd from '../components/layout/HomeJsonLd.astro';
 ---
 
 <BaseLayout canonicalPath="/">
+  <HomeJsonLd slot="head" />
   <Hero />
 
   <!-- Light sheet: rises over the dark hero with radius-2xl top corners. -->

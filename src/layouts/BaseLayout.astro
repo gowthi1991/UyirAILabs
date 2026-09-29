@@ -4,6 +4,7 @@ import '../styles/global.css';
 import Header from '../components/layout/Header.astro';
 import Footer from '../components/layout/Footer.astro';
 import WhatsAppFab from '../components/ui/WhatsAppFab.astro';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title?: string;
@@ -62,6 +63,7 @@ const ogImageUrl = new URL(ogImage, site).href;
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
     <slot name="head" />
+    <Analytics />
   </head>
   <body class={bodyClass}>
     <a class="skip-link t-button" href="#main">Skip to content</a>
